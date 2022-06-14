@@ -1,10 +1,8 @@
 package videopoker.main;
 
-import com.Casino.BlackJack.classes.GameLogic.Game;
-import com.Casino.BlackJack.classes.GameModes.DebugMode;
-import com.Casino.BlackJack.classes.GameModes.InteractiveMode;
-import com.Casino.BlackJack.classes.GameModes.SimulationMode;
-import com.Casino.BlackJack.main.String;
+import videopoker.game.Game;
+import videopoker.mode.*;
+
 
 public class VideoPokerMain {
 
