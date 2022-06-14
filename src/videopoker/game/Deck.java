@@ -22,10 +22,11 @@ public class Deck {
 	
 	private void CreateDebugDeck(String deckList) {
 		String[] cardIndicators = deckList.split(" ");
+		Suit b;
 		
 		for(String cardIndicator : cardIndicators) {
 			String[] indicator = cardIndicator.split("");
-            this.cards.add(new Card(new Rank(indicator(0).charAt(0), new Suit(indicator(1).charAt(0))));
+            this.cards.add(new Card(new Rank(indicator[0].charAt(0)), new Suit(indicator[1].charAt(0))));
 			
 		}
 		
