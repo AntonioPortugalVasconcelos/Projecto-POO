@@ -1,5 +1,14 @@
-package enumerations;
+package videopoker.enumerations;
 
 public enum Suit {
-	C, D, S, H
+	C('C'), D('D'), S('S'), H('H');
+	
+	private char suit;
+	
+	Suit(char suit){
+		this.suit = suit;
+	}
+	public char GetSuit() {
+		return this.suit;
+	}
 }
