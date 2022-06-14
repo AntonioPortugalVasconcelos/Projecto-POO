@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Deck {
 	
 	private ArrayList<Card> cards = new ArrayList<Card>();
+	private int deckSize = 0;
 	
 	public Deck() {
 		this.CreateDeck();
@@ -25,8 +26,19 @@ public class Deck {
 		for(String cardIndicator : cardIndicators) {
 			String[] indicator = cardIndicator.split("");
             this.cards.add(new Card(new Rank(indicator[0].charAt(0)), new Suit(indicator[1].charAt(0))));
-			
+			deckSize++;
+            
 		}
+		
+	}
+	
+	public Card drawCard() {
+		
+		Card draw = cards.get(deckSize);
+		deckSize--;
+		cards.remove(draw);
+		
+		return draw;
 		
 	}
 
