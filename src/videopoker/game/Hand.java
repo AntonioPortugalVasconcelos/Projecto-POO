@@ -1,5 +1,5 @@
 package videopoker.game;
 
-public class Hands {
+public class Hand {
 	
 }
