@@ -54,12 +54,18 @@ public class Hand {
 		this.SortHand();
 		
 		if(checkRoyalFlush()){
-	        return 10;
+	        return 12;
 	    }
 	    if(checkStraightFlush()){
+	        return 11;
+	    }
+	    if(check4KindA()){
+	        return 10;
+	    }
+	    if(check4Kind24()){
 	        return 9;
 	    }
-	    if(check4Kind()){
+	    if(check4Kind5K()){
 	        return 8;
 	    }
 	    if(checkFullHouse()){
@@ -83,6 +89,121 @@ public class Hand {
 	    return 1;
 	}
 	
-	private 	
+	private boolean checkHighPair() {
+		for(int i = 0; i < 4; i++){
+			if(this.hand.get(i).CardRank() == 'J' || this.hand.get(i).CardRank() == 'Q'||
+			this.hand.get(i).CardRank() == 'K' || this.hand.get(i).CardRank() == 'A' ) {
+				if(this.hand.get(i).CardRank() == this.hand.get(i+1).CardRank()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	private boolean check2Pair() {
+		boolean flag = false;
+		for(int i = 0; i < 4; i++){
+			if (!flag) {
+				if(this.hand.get(i).CardRank() == this.hand.get(i+1).CardRank()) {
+					flag = true;
+				}
+			}
+			else if(flag) {
+				if(this.hand.get(i).CardRank() == this.hand.get(i+1).CardRank()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	private boolean check3Kind() {
+		for(int i = 0; i < 3; i++){
+			if(this.hand.get(i).CardRank() == this.hand.get(i+1).CardRank() && this.hand.get(i).CardRank() == this.hand.get(i+2).CardRank()) {
+				return true;
+			}	
+		}
+		return false;
+	}
+	private boolean checkStraight() {
+		int i = 0;
+		if (this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+			this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue() &&
+			this.hand.get(i+2).CardValue()+1 == this.hand.get(i+3).CardValue() &&
+			this.hand.get(i+3).CardValue()+1 == this.hand.get(i+4).CardValue()) {
+	
+			return true;
+		}
+		if (this.hand.get(i).CardValue() == 0 &&
+				this.hand.get(i+1).CardValue() == 1 &&
+				this.hand.get(i+2).CardValue() == 2 &&
+				this.hand.get(i+3).CardValue() == 3 &&
+				this.hand.get(i+4).CardValue() == 12) {
+		
+				return true;
+			}
+		return false;
+	}
+	private boolean checkFlush() {
+		int i = 0;	
+		if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
+			this.hand.get(i).CardSuit() == this.hand.get(i+2).CardSuit() &&
+			this.hand.get(i).CardSuit() == this.hand.get(i+3).CardSuit() &&
+			this.hand.get(i).CardSuit() == this.hand.get(i+4).CardSuit()){
+			
+			return true;
+		}
+		return false;
+	}
+	private boolean checkFullHouse() {
+		if(check3Kind()) {
+			for(int i = 0; i < 4; i++){
+				if (this.hand.get(i).CardValue() == this.hand.get(i+1).CardValue() && 
+						this.hand.get(i).CardValue() != this.hand.get(3).CardValue()) {
+					return true;
+				}
+			}
+		}
+			
+		return false;
+	}
+	private boolean check4KindA() {
+		int i = 1;
+		if(this.hand.get(i).CardRank() == 'A') {
+			return true;
+		}
+		return false;
+	}
+	private boolean check4Kind24() {
+		int i = 0;
+		if(this.hand.get(i+2).CardRank() == '2' || this.hand.get(i+2).CardRank() == '3' || this.hand.get(i+2).CardRank() == '4') {
+			for(i = 0; i < 2; i++){
+		        if(this.hand.get(i).CardRank() == this.hand.get(i+1).CardRank() &&
+		        	this.hand.get(i).CardRank() == this.hand.get(i+2).CardRank() &&
+		        	this.hand.get(i).CardRank() == this.hand.get(i+3).CardRank()){
+		        	
+		            return true;
+		        }
+		    }	
+		}
+		return false;
+	}
+	private boolean check4Kind5K() {		
+		for(int i = 0; i < 2; i++){
+	        if(this.hand.get(i).CardRank() == this.hand.get(i+1).CardRank() &&
+	        	this.hand.get(i).CardRank() == this.hand.get(i+2).CardRank() &&
+	        	this.hand.get(i).CardRank() == this.hand.get(i+3).CardRank()){
+	        	
+	            return true;
+	        }
+	    }	
+		
+		return false;
+	}
+	private boolean checkStraightFlush() {
+		return checkStraight() && checkFlush();
+	}
+	private boolean checkRoyalFlush() {
+		return checkStraightFlush() && this.hand.get(4).CardRank() == 'A';
+	}
 }
 
