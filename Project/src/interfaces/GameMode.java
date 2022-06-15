@@ -8,4 +8,6 @@ public interface GameMode {
 	
 	public String GetDeck();
 
+	public String[] NextCommand(String commands);
+
 }

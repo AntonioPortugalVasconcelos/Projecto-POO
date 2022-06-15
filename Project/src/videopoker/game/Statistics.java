@@ -15,25 +15,25 @@ public class Statistics {
 	public void AddStat(String stat) {
 		switch (stat) {
 			case "1":
-				JackorBetter++;
+				this.JackorBetter++;
 			case "2":
-				TwoPair++;
+				this.TwoPair++;
 			case "3":
-				ThreeKind++;
+				this.ThreeKind++;
 			case "4":
-				Straight++;
+				this.Straight++;
 			case "5":
-				Flush++;
+				this.Flush++;
 			case "6":
-				FullHouse++;
+				this.FullHouse++;
 			case "7":
-				FourKind++;
+				this.FourKind++;
 			case "8":
-				StraightFlush++;
+				this.StraightFlush++;
 			case "9":
-				RoyalFlush++;
+				this.RoyalFlush++;
 			case "0":
-				Other++;
+				this.Other++;
 		
 		}
 		
@@ -42,29 +42,34 @@ public class Statistics {
 	public int GetStat(String stat) {
 		switch (stat) {
 			case "1":
-				return JackorBetter;
+				return this.JackorBetter;
 			case "2":
-				return TwoPair;
+				return this.TwoPair;
 			case "3":
-				return ThreeKind;
+				return this.ThreeKind;
 			case "4":
-				return Straight;
+				return this.Straight;
 			case "5":
-				return Flush;
+				return this.Flush;
 			case "6":
-				return FullHouse;
+				return this.FullHouse;
 			case "7":
-				return FourKind;
+				return this.FourKind;
 			case "8":
-				return StraightFlush;
+				return this.StraightFlush;
 			case "9":
-				return RoyalFlush;
+				return this.RoyalFlush;
 			case "0":
-				return Other;
+				return this.Other;
 		
 		}
 		return -1;
 		
+	}
+	
+	public int TotalPlays() {
+		return this.JackorBetter + this.TwoPair + this.ThreeKind + this.Straight + this.Flush +
+				this.FullHouse + this.FourKind + this.StraightFlush + this.RoyalFlush + this.Other;
 	}
 
 }

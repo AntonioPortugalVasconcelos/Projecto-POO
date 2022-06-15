@@ -48,12 +48,6 @@ public class Hand {
 			}
 		}
 		return discardCard;
-		//for ( d = 0; d < 5; d++) {
-			//if(discardCard[d] != '0') {
-				//draw = Game.getNextCard();
-				
-			//}
-		//}
 	}
 	
 	public int handType() {

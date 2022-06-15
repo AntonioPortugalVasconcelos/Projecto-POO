@@ -11,6 +11,7 @@ public class Game {
 	private Credit credit;
 	private Credit initialCredit;
 	private String commands;
+	private String command;
 	private int bet;
 	
 	public Game(DebugMode mode) {
@@ -36,6 +37,22 @@ public class Game {
 		
 	}
 	
+	private void GetCommands() {
+		String[] returnString = null;
+		returnString = mode.NextCommand(commands);
+		this.command = returnString[0];
+		this.commands = returnString[1];
+		
+	}
 	
+	
+	public void TurnStart() {
+		this.GetCommands();
+		
+	}
+	
+	public void TurnEnd() {
+		
+	}
 	
 }
