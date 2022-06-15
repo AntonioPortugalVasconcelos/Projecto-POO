@@ -26,7 +26,7 @@ public class Deck {
 		for(String cardIndicator : cardIndicators) {
 			String[] indicator = cardIndicator.split("");
             this.cards.add(new Card(new Rank(indicator[0].charAt(0)), new Suit(indicator[1].charAt(0))));
-			deckSize++;
+			this.deckSize++;
             
 		}
 		
@@ -35,10 +35,14 @@ public class Deck {
 	public Card drawCard() {
 		
 		Card draw = cards.get(deckSize);
-		deckSize--;
+		this.deckSize--;
 		cards.remove(draw);
 		
 		return draw;
+		
+	}
+	
+	public void Shuffle() {
 		
 	}
 
