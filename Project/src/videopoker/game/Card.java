@@ -18,4 +18,7 @@ public class Card {
 	public char CardSuit() {
 		return this.suit.GetSuit();
 	}
+	public char CardRank() {
+		return this.rank.GetRank();
+	}
 }
