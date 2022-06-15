@@ -14,13 +14,7 @@ public class Game {
 	private String command;
 	private int bet;
 	
-	public Game(DebugMode mode) {
-		this.mode = mode;
-		
-		
-	}
-
-	public Game(SimulationMode mode) {
+	public Game(GameMode mode) {
 		this.mode = mode;
 		
 		
@@ -45,9 +39,23 @@ public class Game {
 		
 	}
 	
+	private void DoCommand(String command) {
+		switch (command.charAt(0)) {
+			case 'b':
+			case '$':
+			case 'd':
+			case 'h':
+			case 'a':
+			case 's':
+		
+		}
+		
+	}
+	
 	
 	public void TurnStart() {
 		this.GetCommands();
+		this.DoCommand(command);
 		
 	}
 	

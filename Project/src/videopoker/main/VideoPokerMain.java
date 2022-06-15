@@ -1,8 +1,8 @@
 package videopoker.main;
 
-import Project.src.videopoker.game.Game;
-import Project.src.videopoker.mode.DebugMode;
-import Project.src.videopoker.mode.SimulationMode;
+import videopoker.game.Game;
+import videopoker.mode.DebugMode;
+import videopoker.mode.SimulationMode;
 
 
 public class VideoPokerMain {
