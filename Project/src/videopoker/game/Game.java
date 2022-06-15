@@ -29,6 +29,7 @@ public class Game {
 	private void initializeGame() {
 		this.credit = new Credit(mode.StartingCredit());
 		this.commands = mode.getCommands();
+		this.deck = new Deck(mode.getDeck());
 		
 	}
 	

@@ -21,4 +21,9 @@ public class DebugMode implements GameMode {
     			
     }
     
+    public String GetDeck() {
+    	return Files.readString(Path.of("..\\\\..\\\\..\\\\..\\\\TESTS\\" + args[3]))
+    			
+    }
+    
 }
