@@ -1,7 +1,5 @@
 package videopoker.game;
 
-import java.util.ArrayList;
-
 import interfaces.GameMode;
 import videopoker.mode.DebugMode;
 import videopoker.mode.SimulationMode;
@@ -11,7 +9,9 @@ public class Game {
 	private Deck deck;
 	private GameMode mode;
 	private Credit credit;
+	private Credit initialCredit;
 	private String commands;
+	private int bet;
 	
 	public Game(DebugMode mode) {
 		this.mode = mode;
@@ -27,10 +27,11 @@ public class Game {
 	
 	private void initializeGame() {
 		this.credit = new Credit(mode.StartingCredit());
+		this.initialCredit = this.credit;
 		this.commands = mode.getCommands();
 		this.deck = new Deck(mode.GetDeck());
 		for (int i = 0; i < 5; i++) {
-			this.hand.AddHand(deck.drawCard());
+			this.hand.addHand(deck.drawCard());
 		}
 		
 	}
