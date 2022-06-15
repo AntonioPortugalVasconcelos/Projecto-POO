@@ -1,6 +1,6 @@
 package videopoker.game;
 
-import interfaces.GameMode;
+import videopoker.interfaces.GameMode;
 import videopoker.mode.DebugMode;
 import videopoker.mode.SimulationMode;
 

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import interfaces.GameMode;
+import videopoker.interfaces.GameMode;
 
 public abstract class DebugMode implements GameMode {
     private String[] args;
