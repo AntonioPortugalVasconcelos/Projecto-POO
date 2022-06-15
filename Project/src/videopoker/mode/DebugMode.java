@@ -1,6 +1,5 @@
 package videopoker.mode;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -20,7 +19,7 @@ public abstract class DebugMode implements GameMode {
     	
     }
     
-    public String GetCommands() throws IOException {
+    public String GetCommands() {
     	return Files.readString(Path.of("..\\..\\..\\..\\TESTS\\" + args[2]));
     			
     }
@@ -61,5 +60,4 @@ public abstract class DebugMode implements GameMode {
 	    return false;  
 	  }  
 	}
-    
 }
