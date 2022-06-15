@@ -29,6 +29,7 @@ public class VideoPokerMain {
     
 		}
 		
+		game.initializeGame();
 		while(true) {
 			game.TurnStart();
 			game.TurnEnd();
