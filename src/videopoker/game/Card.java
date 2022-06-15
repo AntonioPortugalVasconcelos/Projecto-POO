@@ -12,7 +12,7 @@ public class Card {
 		this.suit = suit;
 	}
 	
-	public char CardValue() {
+	public int CardValue() {
 		return this.rank.GetValue();
 	}
 	public char CardSuit() {
