@@ -1,8 +1,11 @@
 package videopoker.mode;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import interfaces.GameMode;
 
-public class DebugMode implements GameMode {
+public abstract class DebugMode implements GameMode {
     private String[] args;
     
     public DebugMode(String[] arguments) {

@@ -6,10 +6,9 @@ import interfaces.GameMode;
 import videopoker.mode.DebugMode;
 import videopoker.mode.SimulationMode;
 
-
 public class Game {
 	private Hand hand;
-	private ArrayList<Card> deck = new ArrayList<Card>();
+	private Deck deck;
 	private GameMode mode;
 	private Credit credit;
 	private String commands;
@@ -29,7 +28,10 @@ public class Game {
 	private void initializeGame() {
 		this.credit = new Credit(mode.StartingCredit());
 		this.commands = mode.getCommands();
-		this.deck = new Deck(mode.getDeck());
+		this.deck = new Deck(mode.GetDeck());
+		for (int i = 0; i < 5; i++) {
+			this.hand.AddHand(deck.drawCard());
+		}
 		
 	}
 	
