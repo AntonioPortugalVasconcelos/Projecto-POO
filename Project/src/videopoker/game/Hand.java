@@ -16,6 +16,15 @@ public class Hand {
 		Comparator<Card> handComparer = Comparator.comparing(Card::CardValue);
 		Collections.sort(hand, handComparer);
 	}
+	public void addHand(Card a) {
+		this.hand.add(a);
+	}
+	public void setHand(int i, Card a) {
+		this.hand.set(i, a);
+	}
+	public ArrayList<Card> getHand(){
+		return this.hand;
+	}
 	
 	public char[] HoldHand(String hold) {
 		String[] cardsHold = hold.split(" ");
@@ -50,34 +59,36 @@ public class Hand {
 	public int handType() {
 		this.SortHand();
 		
-		if(checkRoyalFlush(cards)){
+		if(checkRoyalFlush()){
 	        return 10;
 	    }
-	    if(checkStraightFlush(cards)){
+	    if(checkStraightFlush()){
 	        return 9;
 	    }
-	    if(check4Kind(cards, flagAndValue)[0]){
+	    if(check4Kind()){
 	        return 8;
 	    }
-	    if(checkFullHouse(cards, flagAndValue3)[0]){
+	    if(checkFullHouse()){
 	        return 7;
 	    }
-	    if(checkFlush(cards)){
+	    if(checkFlush()){
 	        return 6;
 	    }
-	    if(checkStraight(cards)){
+	    if(checkStraight()){
 	        return 5;
 	    }
-	    if(check3Kind(cards, flagAndValue)[0]){
+	    if(check3Kind()){
 	        return 4;
 	    }
-	    if(check2Pair(cards, flagAndValue3)[0]){
+	    if(check2Pair()){
 	        return 3;
 	    }
-	    if(checkHighPair(cards, flagAndValue)[0]){
+	    if(checkHighPair()){
 	        return 2;
 	    }
 	    return 1;
 	}
+	
+	private 	
 }
 
