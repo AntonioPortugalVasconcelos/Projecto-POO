@@ -1,4 +1,4 @@
-package interfaces;
+package videopoker.interfaces;
 
 public interface GameMode {
 

@@ -212,6 +212,7 @@ public class Hand {
 		return checkStraightFlush() && this.hand.get(4).CardRank() == 'A';
 	}
 	public boolean checkAlmostRoyalFlush() {
+		return true;
 		
 	}
 }

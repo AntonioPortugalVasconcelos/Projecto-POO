@@ -18,7 +18,9 @@ public class Advice {
 		if(i == 12 || i == 11) {
 			System.out.println("player should hold cards 1 2 3 4 5");
 		}
-		if(this.hand.checkAlmostRoyalFlush())
+		if(this.hand.checkAlmostRoyalFlush()) {
+			
+		}
 		
 			
 	}
