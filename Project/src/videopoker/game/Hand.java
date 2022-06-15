@@ -5,11 +5,15 @@ import java.util.*;
 public class Hand {
 	private ArrayList<Card> hand;
 	private ArrayList<Card> hand_original;
+	private int index;
+	private int index2;
 
 	public Hand(ArrayList<Card> hand) {
 		super();
 		this.hand = hand;
 		this.hand_original = hand;
+		this.index = -1;
+		this.index2 = -1;
 	}
 	
 	public void SortHand() {
@@ -94,6 +98,7 @@ public class Hand {
 			if(this.hand.get(i).CardRank() == 'J' || this.hand.get(i).CardRank() == 'Q'||
 			this.hand.get(i).CardRank() == 'K' || this.hand.get(i).CardRank() == 'A' ) {
 				if(this.hand.get(i).CardRank() == this.hand.get(i+1).CardRank()) {
+					this.index = i;
 					return true;
 				}
 			}
@@ -110,6 +115,7 @@ public class Hand {
 			}
 			else if(flag) {
 				if(this.hand.get(i).CardRank() == this.hand.get(i+1).CardRank()) {
+					this.index = i;
 					return true;
 				}
 			}
@@ -204,6 +210,9 @@ public class Hand {
 	}
 	private boolean checkRoyalFlush() {
 		return checkStraightFlush() && this.hand.get(4).CardRank() == 'A';
+	}
+	public boolean checkAlmostRoyalFlush() {
+		
 	}
 }
 
