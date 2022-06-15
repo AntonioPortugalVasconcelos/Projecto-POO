@@ -38,7 +38,7 @@ public abstract class DebugMode implements GameMode {
 	    			
 	    		}else {
 	    			commandDone = true;
-	    			commandString = commandString + letter;
+	    			commandString = commandString + " " + letter;
 	    		}
 	    		
 	    	}
@@ -54,12 +54,12 @@ public abstract class DebugMode implements GameMode {
     }
     
     private static boolean isNumeric(String str) { 
-    	  try {  
-    	    Double.parseDouble(str);  
-    	    return true;
-    	  } catch(NumberFormatException e){  
-    	    return false;  
-    	  }  
-    	}
+	  try {  
+	    Double.parseDouble(str);  
+	    return true;
+	  } catch(NumberFormatException e){  
+	    return false;  
+	  }  
+	}
     
 }

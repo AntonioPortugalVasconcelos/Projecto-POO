@@ -8,8 +8,13 @@ public class Credit {
 		
 	}
 	
-	public int Add(int change) {
-		return credit + change;
+	public void Add(int change) {
+		this.credit = credit + change;
+				
+	}
+	
+	public int GetValue() {
+		return credit;
 				
 	}
 
