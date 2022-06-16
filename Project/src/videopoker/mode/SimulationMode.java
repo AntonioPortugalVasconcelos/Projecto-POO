@@ -17,29 +17,26 @@ public class SimulationMode implements GameMode{
 
 	@Override
 	public int StartingCredit() {
-		return 0;
+		return Integer.valueOf(args[1]);
 	}
 
-	@Override
-	public String getCommands() {
+	public int BetValue() {
+		return Integer.valueOf(args[2]);
+	}
+	
+	public int GetPlays() {
+		return Integer.valueOf(args[3]);
+	}
+	
+	public String[] NextCommand(String commands) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		
 	    try {
-			return reader.readLine();
+	    	String[] returnStrings = new String[]{reader.readLine(), null};
+	    	return returnStrings;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
-		
-	}
-
-	@Override
-	public String GetDeck() {
-		return null;
-	}
-
-	@Override
-	public String[] NextCommand(String commands) {
 		return null;
 	}
 	

@@ -22,7 +22,6 @@ public class DebugMode implements GameMode {
     	
     }
     
-    @Override
     public String getCommands() {
     	try {
 			return Files.readString(Path.of("..\\TESTS\\" + this.args[2] + ".txt"));
@@ -33,7 +32,6 @@ public class DebugMode implements GameMode {
     			
     }
     
-    @Override
     public String[] NextCommand(String commands) {
     	String[] splitCommands = commands.split(" ");
     	String command = null;
@@ -76,7 +74,6 @@ public class DebugMode implements GameMode {
 		
     }
     
-    @Override
     public String GetDeck() {
     	try {
 			return Files.readString(Path.of("..\\TESTS\\" + this.args[3] + ".txt"));

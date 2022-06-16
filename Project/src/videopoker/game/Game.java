@@ -25,12 +25,23 @@ public class Game {
 		
 	}
 	
-	public void initializeGame() {
+	public void initializeGameD() {
 		this.credit = new Credit(mode.StartingCredit());
 		this.initialCredit = new Credit(mode.StartingCredit());
-		this.commands = mode.getCommands();
-		this.deck = new Deck(mode.GetDeck());
+		this.commands = ((DebugMode) mode).getCommands();
+		this.deck = new Deck(((DebugMode) mode).GetDeck());
 		this.stats = new Statistics();
+		this.state = 0;
+		
+	}
+
+	public void initializeGameS() {
+		this.credit = new Credit(mode.StartingCredit());
+		this.initialCredit = new Credit(mode.StartingCredit());
+		this.deck = (((SimulationMode) mode).createDeck());
+		this.stats = new Statistics();
+		this.plays = (((SimulationMode) mode).GetPlays());
+		this.bet = (((SimulationMode) mode).BetValue());
 		this.state = 0;
 		
 	}
@@ -65,7 +76,10 @@ public class Game {
 		System.out.printf("-cmd %s\n", command);
 		switch (command.charAt(0)) {
 			case 'b':
-				if (command.length() != 1) {
+				if (commands == null) {
+					
+				}
+				else if (command.length() != 1) {
 					this.bet = Integer.valueOf(command.split(" ")[1]);
 					if (this.bet < 1 || this.bet > 5) {
 						System.out.printf("b: illegal amount \n");
