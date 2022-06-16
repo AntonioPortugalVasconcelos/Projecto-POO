@@ -77,6 +77,11 @@ public class Game {
 		switch (command.charAt(0)) {
 			case 'b':
 				if (commands == null) {
+					if (this.credit.Add(-bet)) {
+						this.credit.Add(bet);
+						System.out.printf("b: illegal amount \n");
+						break;
+					}
 					
 				}
 				else if (command.length() != 1) {

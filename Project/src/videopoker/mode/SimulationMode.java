@@ -56,7 +56,9 @@ public class SimulationMode implements GameMode{
             }
         }
         
-        return new Deck(cards);
+        Deck deck = new Deck(cards);
+        deck.Shuffle();
+        return deck;
     }
 
 }
