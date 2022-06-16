@@ -29,6 +29,18 @@ public class Hand {
 	public ArrayList<Card> getHand(){
 		return this.hand;
 	}
+	public String toString() {
+		String strHand = null;
+		for(int i = 0; i < 5; i++) {
+			if(i == 0) {
+				strHand = Character.toString(this.hand.get(i).CardRank()) + Character.toString(this.hand.get(i).CardSuit());
+			}
+			else {
+				strHand = strHand + " " + Character.toString(this.hand.get(i).CardRank()) + Character.toString(this.hand.get(i).CardSuit());
+			}
+		}
+		return strHand;
+	}
 	
 	public char[] HoldHand(String hold) {
 		String[] cardsHold = hold.split(" ");
@@ -125,6 +137,7 @@ public class Hand {
 	private boolean check3Kind() {
 		for(int i = 0; i < 3; i++){
 			if(this.hand.get(i).CardRank() == this.hand.get(i+1).CardRank() && this.hand.get(i).CardRank() == this.hand.get(i+2).CardRank()) {
+				this.index = i;
 				return true;
 			}	
 		}
@@ -175,6 +188,8 @@ public class Hand {
 	private boolean check4KindA() {
 		int i = 1;
 		if(this.hand.get(i).CardRank() == 'A') {
+			
+			this.index = i;
 			return true;
 		}
 		return false;
@@ -187,6 +202,7 @@ public class Hand {
 		        	this.hand.get(i).CardRank() == this.hand.get(i+2).CardRank() &&
 		        	this.hand.get(i).CardRank() == this.hand.get(i+3).CardRank()){
 		        	
+		        	this.index = i;
 		            return true;
 		        }
 		    }	
@@ -199,6 +215,7 @@ public class Hand {
 	        	this.hand.get(i).CardRank() == this.hand.get(i+2).CardRank() &&
 	        	this.hand.get(i).CardRank() == this.hand.get(i+3).CardRank()){
 	        	
+	        	this.index = i;
 	            return true;
 	        }
 	    }	
@@ -212,8 +229,48 @@ public class Hand {
 		return checkStraightFlush() && this.hand.get(4).CardRank() == 'A';
 	}
 	public boolean checkAlmostRoyalFlush() {
+		
 		return true;
 		
 	}
+	public boolean checkAlmostFlush(){
+		int i = 0;
+		if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
+				this.hand.get(i).CardSuit() == this.hand.get(i+2).CardSuit() &&
+				this.hand.get(i).CardSuit() == this.hand.get(i+3).CardSuit() &&
+				this.hand.get(i).CardSuit() == this.hand.get(i+4).CardSuit()){
+				
+				return true;
+			}
+		return false;
+	}
+	public boolean checkAlmostStraight(){
+		return true;
+	}
+	public boolean check3Aces() {
+		if(check3Kind()) {
+			if(this.hand.get(this.index).CardRank() == 'A') {
+				return true;
+			}
+		}
+		return false;
+	}
+	public String searchSameKind() {
+		String Aces = null;
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if (this.hand_original.get(i).CardRank() == this.hand.get(this.index).CardRank()) {
+				if(!flag) {
+					Aces = String.valueOf(i);
+					flag = true;
+				}
+				else if(flag) {
+					Aces = Aces + " " + String.valueOf(i);
+				}
+			}
+		}	
+		return Aces;
+	}
+	
 }
 
