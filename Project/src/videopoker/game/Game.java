@@ -218,6 +218,7 @@ public class Game {
 	public String TurnStart() {
 		this.GetCommands();
 		this.DoCommandStart(command);
+		this.plays--;
 		return command;
 		
 	}
@@ -225,6 +226,7 @@ public class Game {
 	public String TurnEnd() {
 		this.GetCommands();
 		this.DoCommandEnd(command);
+		this.plays--;
 		return command;
 		
 	}
