@@ -1,13 +1,14 @@
 package videopoker.game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Deck {
 	
 	private ArrayList<Card> cards = new ArrayList<Card>();
 	
-	public Deck() {
-		this.CreateDeck();
+	public Deck(ArrayList<Card> cardList) {
+		this.CreateDeck(cardList);
 		
 	}
 	
@@ -16,7 +17,8 @@ public class Deck {
 		
 	}
 	
-	private void CreateDeck() {
+	private void CreateDeck(ArrayList<Card> cardList) {
+		this.cards = cardList;
 		
 	}
 	
@@ -40,7 +42,7 @@ public class Deck {
 	}
 	
 	public void Shuffle() {
-		
+		Collections.shuffle(cards);
 	}
 
 }

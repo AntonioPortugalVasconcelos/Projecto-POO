@@ -11,29 +11,40 @@ public class Statistics {
 	private int StraightFlush = 0;
 	private int RoyalFlush = 0;
 	private int Other = 0;
+	private int SumOfBets = 0;
 	
-	public void AddStat(String stat) {
+	public void AddStat(int stat) {
 		switch (stat) {
-			case "1":
+			case 1:
 				this.JackorBetter++;
-			case "2":
+				break;
+			case 2:
 				this.TwoPair++;
-			case "3":
+				break;
+			case 3:
 				this.ThreeKind++;
-			case "4":
+				break;
+			case 4:
 				this.Straight++;
-			case "5":
+				break;
+			case 5:
 				this.Flush++;
-			case "6":
+				break;
+			case 6:
 				this.FullHouse++;
-			case "7":
+				break;
+			case 7:
 				this.FourKind++;
-			case "8":
+				break;
+			case 8:
 				this.StraightFlush++;
-			case "9":
+				break;
+			case 9:
 				this.RoyalFlush++;
-			case "0":
+				break;
+			case 0:
 				this.Other++;
+				break;
 		
 		}
 		
@@ -70,6 +81,14 @@ public class Statistics {
 	public int TotalPlays() {
 		return this.JackorBetter + this.TwoPair + this.ThreeKind + this.Straight + this.Flush +
 				this.FullHouse + this.FourKind + this.StraightFlush + this.RoyalFlush + this.Other;
+	}
+	
+	public void AddBet(int bet) {
+		this.SumOfBets += bet;
+	}
+	
+	public int GetBets() {
+		return SumOfBets;
 	}
 
 }
