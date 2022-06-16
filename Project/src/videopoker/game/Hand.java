@@ -105,6 +105,16 @@ public class Hand {
 	    return 1;
 	}
 	
+	public boolean checkPair() {
+		for(int i = 0; i < 4; i++){
+			if(this.hand.get(i).CardRank() == this.hand.get(i+1).CardRank()) {
+				this.index = i;
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private boolean checkHighPair() {
 		for(int i = 0; i < 4; i++){
 			if(this.hand.get(i).CardRank() == 'J' || this.hand.get(i).CardRank() == 'Q'||
@@ -122,6 +132,7 @@ public class Hand {
 		for(int i = 0; i < 4; i++){
 			if (!flag) {
 				if(this.hand.get(i).CardRank() == this.hand.get(i+1).CardRank()) {
+					this.index2 = i;
 					flag = true;
 				}
 			}
@@ -228,6 +239,11 @@ public class Hand {
 	private boolean checkRoyalFlush() {
 		return checkStraightFlush() && this.hand.get(4).CardRank() == 'A';
 	}
+	
+	//				   //
+	// ADVICE FUNCTIONS//
+	//				   //
+	
 	public boolean checkAlmostRoyalFlush() {
 		
 		return true;
@@ -237,14 +253,98 @@ public class Hand {
 		int i = 0;
 		if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
 				this.hand.get(i).CardSuit() == this.hand.get(i+2).CardSuit() &&
+				this.hand.get(i).CardSuit() == this.hand.get(i+3).CardSuit()){
+				this.index = i;
+				return true;
+			}
+		if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
+				this.hand.get(i).CardSuit() == this.hand.get(i+2).CardSuit() &&
+				this.hand.get(i).CardSuit() == this.hand.get(i+4).CardSuit()){
+				this.index = i;
+				return true;
+			}
+		if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
 				this.hand.get(i).CardSuit() == this.hand.get(i+3).CardSuit() &&
 				this.hand.get(i).CardSuit() == this.hand.get(i+4).CardSuit()){
-				
+				this.index = i;
+				return true;
+			}
+		if(	this.hand.get(i+1).CardSuit() == this.hand.get(i+2).CardSuit() &&
+				this.hand.get(i+1).CardSuit() == this.hand.get(i+3).CardSuit() &&
+				this.hand.get(i+1).CardSuit() == this.hand.get(i+4).CardSuit()){
+				this.index = i+1;
 				return true;
 			}
 		return false;
 	}
 	public boolean checkAlmostStraight(){
+		for(int i = 0; i < 2; i++) {
+			if (this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+					this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue() &&
+					this.hand.get(i+2).CardValue()+1 == this.hand.get(i+3).CardValue()) {
+					
+				this.index = i;	
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean checkAlmostStraightFlush(){
+		int i = 0;
+
+		if(this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+		this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue() &&
+		this.hand.get(i+2).CardValue()+1 == this.hand.get(i+3).CardValue()) {
+			if(this.hand.get(i).CardSuit()== this.hand.get(i+1).CardSuit() &&
+				this.hand.get(i).CardSuit()== this.hand.get(i+2).CardSuit() &&
+				this.hand.get(i).CardSuit()== this.hand.get(i+3).CardSuit()) {
+				this.index = 1;
+				return true;
+			}
+		}
+		if(this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+				this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue() &&
+				this.hand.get(i+2).CardValue()+2 == this.hand.get(i+4).CardValue()) {
+					if(this.hand.get(i).CardSuit()== this.hand.get(i+1).CardSuit() &&
+						this.hand.get(i).CardSuit()== this.hand.get(i+2).CardSuit() &&
+						this.hand.get(i).CardSuit()== this.hand.get(i+4).CardSuit()) {
+						this.index = 2;
+						return true;
+					}
+		}
+		if(this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+				this.hand.get(i+1).CardValue()+2 == this.hand.get(i+3).CardValue() &&
+				this.hand.get(i+3).CardValue()+1 == this.hand.get(i+4).CardValue()) {
+					if(this.hand.get(i).CardSuit()== this.hand.get(i+1).CardSuit() &&
+						this.hand.get(i).CardSuit()== this.hand.get(i+3).CardSuit() &&
+						this.hand.get(i).CardSuit()== this.hand.get(i+4).CardSuit()) {
+						this.index = 3;
+						return true;
+					}
+		}
+		if(this.hand.get(i).CardValue()+2 == this.hand.get(i+2).CardValue() &&
+				this.hand.get(i+2).CardValue()+1 == this.hand.get(i+3).CardValue() &&
+				this.hand.get(i+3).CardValue()+1 == this.hand.get(i+4).CardValue()) {
+					if(this.hand.get(i).CardSuit()== this.hand.get(i+2).CardSuit() &&
+						this.hand.get(i).CardSuit()== this.hand.get(i+3).CardSuit() &&
+						this.hand.get(i).CardSuit()== this.hand.get(i+4).CardSuit()) {
+						this.index = 4;
+						return true;
+					}
+		}
+		if(this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue() &&
+				this.hand.get(i+2).CardValue()+1 == this.hand.get(i+3).CardValue() &&
+				this.hand.get(i+3).CardValue()+1 == this.hand.get(i+4).CardValue()) {
+					if(this.hand.get(i+1).CardSuit()== this.hand.get(i+2).CardSuit() &&
+						this.hand.get(i+1).CardSuit()== this.hand.get(i+3).CardSuit() &&
+						this.hand.get(i+1).CardSuit()== this.hand.get(i+4).CardSuit()) {
+						this.index = 5;
+						return true;
+					}
+		}
+		return false;
+	}
+	public boolean check3RoyalFlush(){
 		return true;
 	}
 	public boolean check3Aces() {
@@ -255,6 +355,176 @@ public class Hand {
 		}
 		return false;
 	}
+	
+	public boolean checkAKQJ() {
+		int i = 1;
+		if(this.hand.get(i).CardRank() == 'J' && this.hand.get(i+1).CardRank() == 'Q' &&
+			this.hand.get(i+2).CardRank() == 'K' && this.hand.get(i+3).CardRank() == 'A') {
+			return true;
+		}
+		return false;	
+	}
+	
+	public boolean checkQJSuit() {
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if (this.hand.get(i).CardRank() == 'Q') {
+				this.index = i;
+				flag = true;
+			}
+		}
+		if(flag) {
+			for(int i = 0; i < 5; i++) {
+				if (this.hand.get(i).CardRank() == 'J') {
+					if (this.hand.get(this.index).CardSuit() == this.hand.get(i).CardSuit()) {
+						this.index2 = i;
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean checkKQJ() {
+		int i = 2;
+		if(this.hand.get(i).CardRank() == 'J' && this.hand.get(i+1).CardRank() == 'Q' &&
+			this.hand.get(i+2).CardRank() == 'K') {
+			return true;
+		}
+		return false;	
+	}
+	
+	public boolean checkJTSuit() {
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if (this.hand.get(i).CardRank() == 'J') {
+				this.index = i;
+				flag = true;
+			}
+		}
+		if(flag) {
+			for(int i = 0; i < 5; i++) {
+				if (this.hand.get(i).CardRank() == 'T') {
+					if (this.hand.get(this.index).CardSuit() == this.hand.get(i).CardSuit()) {
+						this.index2 = i;
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean checkQJ() {
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if (this.hand.get(i).CardRank() == 'Q') {
+				this.index = i;
+				flag = true;
+			}
+		}
+		if(flag) {
+			for(int i = 0; i < 5; i++) {
+				if (this.hand.get(i).CardRank() == 'J') {
+					this.index2 = i;
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean checkQTSuit() {
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if (this.hand.get(i).CardRank() == 'Q') {
+				this.index = i;
+				flag = true;
+			}
+		}
+		if(flag) {
+			for(int i = 0; i < 5; i++) {
+				if (this.hand.get(i).CardRank() == 'T') {
+					if (this.hand.get(this.index).CardSuit() == this.hand.get(i).CardSuit()) {
+						this.index2 = i;
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}	
+	
+	public boolean checkKjKq() {
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if (this.hand.get(i).CardRank() == 'K') {
+				this.index = i;
+				flag = true;
+			}
+		}
+		if(flag) {
+			for(int i = 0; i < 5; i++) {
+				if (this.hand.get(i).CardRank() == 'J' || this.hand.get(i).CardRank() == 'Q') {
+					if (this.hand.get(this.index).CardSuit() == this.hand.get(i).CardSuit()) {
+						this.index2 = i;
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean CheckAce() {
+		int i = 4;
+		if(this.hand.get(i).CardRank() == 'A') {
+			this.index = i;
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean checkTK() {
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if (this.hand.get(i).CardRank() == 'T') {
+				this.index = i;
+				flag = true;
+			}
+		}
+		if(flag) {
+			for(int i = 0; i < 5; i++) {
+				if (this.hand.get(i).CardRank() == 'K') {
+					if (this.hand.get(this.index).CardSuit() == this.hand.get(i).CardSuit()) {
+						this.index2 = i;
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}	
+
+	public boolean checkJoQoK() {
+		for(int i = 0; i < 5; i++) {
+			if (this.hand.get(i).CardRank() == 'J' || this.hand.get(i).CardRank() == 'Q' ||
+					this.hand.get(i).CardRank() == 'K') {
+				this.index = i;
+				return true;
+			}
+		}
+		return false;
+	}
+
+		
+	
+	
+	
+	
+	
+	
 	public String searchSameKind() {
 		String Aces = null;
 		boolean flag = false;
@@ -271,6 +541,166 @@ public class Hand {
 		}	
 		return Aces;
 	}
+	public String search2Pair() {
+		String Aces = null;
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if (this.hand_original.get(i).CardRank() == this.hand.get(this.index).CardRank() || 
+					this.hand_original.get(i).CardRank() == this.hand.get(this.index2).CardRank()) {
+				if(!flag) {
+					Aces = String.valueOf(i);
+					flag = true;
+				}
+				else if(flag) {
+					Aces = Aces + " " + String.valueOf(i);
+				}
+			}
+		}
+		return Aces;
+	}
+	public String searchSameSuit() {
+		String Aces = null;
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if (this.hand_original.get(i).CardSuit() == this.hand.get(this.index).CardSuit()) {
+				if(!flag) {
+					Aces = String.valueOf(i);
+					flag = true;
+				}
+				else if(flag) {
+					Aces = Aces + " " + String.valueOf(i);
+				}
+			}
+		}	
+		return Aces;
+	}
+	public String search4Straight() {
+		String Aces = null;
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if (this.hand_original.get(i).CardValue() == this.hand.get(this.index).CardValue() ||
+					this.hand_original.get(i).CardValue() == this.hand.get(this.index).CardValue()+1 ||
+					this.hand_original.get(i).CardValue() == this.hand.get(this.index).CardValue()+2 ||
+					this.hand_original.get(i).CardValue() == this.hand.get(this.index).CardValue()+3) {
+				if(!flag) {
+					Aces = String.valueOf(i);
+					flag = true;
+				}
+				else if(flag) {
+					Aces = Aces + " " + String.valueOf(i);
+				}
+			}
+		}	
+		return Aces;
+	}
+	public String searchAKQJ() {
+		String Aces = null;
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if (this.hand_original.get(i).CardRank() == 'J' || this.hand_original.get(i).CardRank() == 'Q' ||
+					this.hand_original.get(i).CardRank() == 'K' || this.hand_original.get(i).CardRank() == 'A') {
+				if(!flag) {
+					Aces = String.valueOf(i);
+					flag = true;
+				}
+				else if(flag) {
+					Aces = Aces + " " + String.valueOf(i);
+				}
+			}
+		}
+		return Aces;
+	}
 	
+	public String search4StraightFlush() {
+		String Aces = null;
+		boolean flag = false;
+		if(this.index == 1) {
+			for(int i = 0; i < 5; i++) {
+				if(this.hand_original.get(i).CardRank() == this.hand.get(0).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(1).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(2).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(3).CardRank()) {
+					
+					if(!flag) {
+						Aces = String.valueOf(i);
+						flag = true;
+					}
+					else if(flag) {
+						Aces = Aces + " " + String.valueOf(i);
+					}
+				}
+			}
+		}
+		else if(this.index == 2) {
+			for(int i = 0; i < 5; i++) {
+				if(this.hand_original.get(i).CardRank() == this.hand.get(0).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(1).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(2).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(4).CardRank()) {
+					
+					if(!flag) {
+						Aces = String.valueOf(i);
+						flag = true;
+					}
+					else if(flag) {
+						Aces = Aces + " " + String.valueOf(i);
+					}
+				}
+			}
+		}
+		else if(this.index == 3) {
+			for(int i = 0; i < 5; i++) {
+				if(this.hand_original.get(i).CardRank() == this.hand.get(0).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(1).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(3).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(4).CardRank()) {
+					
+					if(!flag) {
+						Aces = String.valueOf(i);
+						flag = true;
+					}
+					else if(flag) {
+						Aces = Aces + " " + String.valueOf(i);
+					}
+				}
+			}
+		}
+		else if(this.index == 4) {
+			for(int i = 0; i < 5; i++) {
+				if(this.hand_original.get(i).CardRank() == this.hand.get(0).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(2).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(3).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(4).CardRank()) {
+					
+					if(!flag) {
+						Aces = String.valueOf(i);
+						flag = true;
+					}
+					else if(flag) {
+						Aces = Aces + " " + String.valueOf(i);
+					}
+				}
+			}
+		}
+		else if(this.index == 5) {
+			for(int i = 0; i < 5; i++) {
+				if(this.hand_original.get(i).CardRank() == this.hand.get(1).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(2).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(3).CardRank() ||
+				this.hand_original.get(i).CardRank() == this.hand.get(4).CardRank()) {
+					
+					if(!flag) {
+						Aces = String.valueOf(i);
+						flag = true;
+					}
+					else if(flag) {
+						Aces = Aces + " " + String.valueOf(i);
+					}
+				}
+			}
+		}
+		return Aces;
+	}
 }
+
 
