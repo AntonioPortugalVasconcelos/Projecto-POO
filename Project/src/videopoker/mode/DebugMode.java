@@ -3,6 +3,7 @@ package videopoker.mode;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 
 import videopoker.interfaces.GameMode;
 
@@ -24,7 +25,7 @@ public class DebugMode implements GameMode {
     @Override
     public String getCommands() {
     	try {
-			return Files.readString(Path.of("C:\\Users\\vasca\\Desktop\\ProjectoPOO\\TESTS" + this.args[2] + ".txt"));
+			return Files.readString(Path.of("C:\\Users\\vasca\\Desktop\\ProjectoPOO\\TESTS\\" + this.args[2] + ".txt"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -38,28 +39,47 @@ public class DebugMode implements GameMode {
     	String command = null;
     	String commandString = null;
     	Boolean commandDone = false;
-		if (splitCommands[0] == "h" || splitCommands[0] == "b") {
-			command = splitCommands[0];
-	    	for (String letter : splitCommands) {
+		command = splitCommands[0];
+		String[] shortCommand = Arrays.copyOfRange(splitCommands, 1, splitCommands.length);
+		if (command.equals("h") || command.equals("b")) {
+	    	for (String letter : shortCommand) {
 	    		if (isNumeric(letter) && !commandDone) {
 	    			command = command + " " + letter;
 	    			
-	    		}else {
+	    		}else if (!commandDone){
 	    			commandDone = true;
+	    			commandString = letter;
+	    		}else {
 	    			commandString = commandString + " " + letter;
+	    			
 	    		}
 	    		
 	    	}
 	    	String[] returnStrings = new String[]{command, commandString};
 	    	return returnStrings;
+	    	
+		}else{
+			for (String letter : shortCommand) {
+				if (!commandDone){
+	    			commandDone = true;
+	    			commandString = letter;
+				}else {
+					commandString = commandString + " " + letter;
+					
+				}	
+				
+	    	}
+	    	String[] returnStrings = new String[]{command, commandString};
+	    	return returnStrings;
+			
 		}
-    	return null;
+		
     }
     
     @Override
     public String GetDeck() {
     	try {
-			return Files.readString(Path.of("C:\\Users\\vasca\\Desktop\\ProjectoPOO\\TESTS" + this.args[3] + ".txt"));
+			return Files.readString(Path.of("C:\\Users\\vasca\\Desktop\\ProjectoPOO\\TESTS\\" + this.args[3] + ".txt"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
