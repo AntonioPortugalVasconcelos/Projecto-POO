@@ -27,7 +27,7 @@ public class Game {
 	
 	public void initializeGame() {
 		this.credit = new Credit(mode.StartingCredit());
-		this.initialCredit = this.credit;
+		this.initialCredit = new Credit(mode.StartingCredit());
 		this.commands = mode.getCommands();
 		this.deck = new Deck(mode.GetDeck());
 		this.stats = new Statistics();
@@ -88,6 +88,7 @@ public class Game {
 					
 				}
 				System.out.printf("player is betting %s\n", this.bet);
+				this.stats.AddBet(bet);
 				break;
 				
 			case '$':
@@ -128,7 +129,7 @@ public class Game {
 				System.out.printf("---------------------------\n");	
 				System.out.printf("Total                    %d\n", this.stats.TotalPlays());	
 				System.out.printf("---------------------------\n");
-				System.out.printf("Credit               %d(%d)\n", this.credit.GetValue(), (this.initialCredit.GetValue()-this.credit.GetValue())/this.stats.TotalPlays()*100);
+				System.out.printf("Credit             %d(%f%%)\n", this.credit.GetValue(), (float)(this.initialCredit.GetValue()-this.credit.GetValue())/this.stats.GetBets()*100);
 				break;
 		
 		}
@@ -187,7 +188,7 @@ public class Game {
 				System.out.printf("---------------------------\n");	
 				System.out.printf("Total                    %d\n", this.stats.TotalPlays());	
 				System.out.printf("---------------------------\n");
-				System.out.printf("Credit               %d(%d)\n", this.credit.GetValue(), (this.initialCredit.GetValue()-this.credit.GetValue())/this.stats.TotalPlays()*100);
+				System.out.printf("Credit             %d(%f%%)\n", this.credit.GetValue(), (float)(this.initialCredit.GetValue()-this.credit.GetValue())/this.stats.GetBets()*100);
 				break;
 		
 		}

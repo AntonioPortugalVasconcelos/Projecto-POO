@@ -10,7 +10,6 @@ public class VideoPokerMain {
 	public static void main(String[] args) {
 
 		Game game = null;
-		
 		if (args.length == 0) {
             System.out.println("Error: No gamemode specified");
             return;

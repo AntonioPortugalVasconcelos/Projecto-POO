@@ -6,8 +6,8 @@ public class Deck {
 	
 	private ArrayList<Card> cards = new ArrayList<Card>();
 	
-	public Deck() {
-		this.CreateDeck();
+	public Deck(ArrayList<Card> cardList) {
+		this.CreateDeck(cardList);
 		
 	}
 	
@@ -16,7 +16,8 @@ public class Deck {
 		
 	}
 	
-	private void CreateDeck() {
+	private void CreateDeck(ArrayList<Card> cardList) {
+		this.cards = cardList;
 		
 	}
 	

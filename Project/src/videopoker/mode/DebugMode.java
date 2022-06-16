@@ -25,7 +25,7 @@ public class DebugMode implements GameMode {
     @Override
     public String getCommands() {
     	try {
-			return Files.readString(Path.of("C:\\Users\\vasca\\Desktop\\ProjectoPOO\\TESTS\\" + this.args[2] + ".txt"));
+			return Files.readString(Path.of("..\\TESTS\\" + this.args[2] + ".txt"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -79,7 +79,7 @@ public class DebugMode implements GameMode {
     @Override
     public String GetDeck() {
     	try {
-			return Files.readString(Path.of("C:\\Users\\vasca\\Desktop\\ProjectoPOO\\TESTS\\" + this.args[3] + ".txt"));
+			return Files.readString(Path.of("..\\TESTS\\" + this.args[3] + ".txt"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

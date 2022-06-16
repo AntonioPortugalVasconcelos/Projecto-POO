@@ -11,6 +11,7 @@ public class Statistics {
 	private int StraightFlush = 0;
 	private int RoyalFlush = 0;
 	private int Other = 0;
+	private int SumOfBets = 0;
 	
 	public void AddStat(int stat) {
 		switch (stat) {
@@ -80,6 +81,14 @@ public class Statistics {
 	public int TotalPlays() {
 		return this.JackorBetter + this.TwoPair + this.ThreeKind + this.Straight + this.Flush +
 				this.FullHouse + this.FourKind + this.StraightFlush + this.RoyalFlush + this.Other;
+	}
+	
+	public void AddBet(int bet) {
+		this.SumOfBets += bet;
+	}
+	
+	public int GetBets() {
+		return SumOfBets;
 	}
 
 }
