@@ -8,8 +8,12 @@ public class Credit {
 		
 	}
 	
-	public void Add(int change) {
+	public boolean Add(int change) {
 		this.credit = credit + change;
+		if (this.credit < 0) {
+			return true;
+		}
+		return false;
 				
 	}
 	
