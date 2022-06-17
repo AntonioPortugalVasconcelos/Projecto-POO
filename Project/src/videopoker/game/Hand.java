@@ -21,7 +21,7 @@ public class Hand {
 		Collections.sort(hand, handComparer);
 	}
 	public void SortHandSuit() {
-		Comparator<Card> handComparer = Comparator.comparing(Card::CardSuit);
+		Comparator<Card> handComparer = Comparator.comparing(Card::CardSuit).thenComparing(Card::CardValue);
 		Collections.sort(hand, handComparer);
 	}
 	public void addHand(Card a) {
@@ -51,7 +51,6 @@ public class Hand {
 		int i = -1;
 		char holdCard[] = {'0','0','0','0','0'};
 		char discardCard[] = {'1','2','3','4','5'};
-		Card draw;
 		for(String aux : cardsHold) {
 			if(i == -1 ) {
 				i++;
@@ -250,7 +249,7 @@ public class Hand {
 	
 	public boolean checkAlmostRoyalFlush() {
 		
-		//this.SortHandSuit();
+		this.SortHandSuit();
 		for(int i = 0; i < 2; i++) {
 			if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
 			this.hand.get(i).CardSuit()== this.hand.get(i+2).CardSuit() &&
@@ -265,37 +264,22 @@ public class Hand {
 			}
 		}
 
-		//this.SortHand();
+		this.SortHand();
 		return false;
 		
 	}
 	
 	public boolean checkAlmostFlush(){
-		int i = 0;
-		if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
-				this.hand.get(i).CardSuit() == this.hand.get(i+2).CardSuit() &&
-				this.hand.get(i).CardSuit() == this.hand.get(i+3).CardSuit()){
+		this.SortHandSuit();
+		for(int i = 0; i < 2; i++) {
+			if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
+			this.hand.get(i).CardSuit()== this.hand.get(i+2).CardSuit() &&
+			this.hand.get(i).CardSuit()== this.hand.get(i+3).CardSuit()) {
 				this.index = i;
 				return true;
 			}
-		if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
-				this.hand.get(i).CardSuit() == this.hand.get(i+2).CardSuit() &&
-				this.hand.get(i).CardSuit() == this.hand.get(i+4).CardSuit()){
-				this.index = i;
-				return true;
-			}
-		if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
-				this.hand.get(i).CardSuit() == this.hand.get(i+3).CardSuit() &&
-				this.hand.get(i).CardSuit() == this.hand.get(i+4).CardSuit()){
-				this.index = i;
-				return true;
-			}
-		if(	this.hand.get(i+1).CardSuit() == this.hand.get(i+2).CardSuit() &&
-				this.hand.get(i+1).CardSuit() == this.hand.get(i+3).CardSuit() &&
-				this.hand.get(i+1).CardSuit() == this.hand.get(i+4).CardSuit()){
-				this.index = i+1;
-				return true;
-			}
+		}
+		this.SortHand();
 		return false;
 	}
 	
@@ -369,16 +353,19 @@ public class Hand {
 	}
 	
 	public boolean check3RoyalFlush(){
-
-		if(this.hand.get(2).CardSuit()== this.hand.get(3).CardSuit() &&
-			this.hand.get(2).CardSuit()== this.hand.get(4).CardSuit()) {
-			
-			if(this.hand.get(2).CardValue() > 7 &&
-			this.hand.get(3).CardValue() > 7 &&
-			this.hand.get(4).CardValue() > 7) {
-				return true;
+		this.SortHandSuit();
+		for(int i = 0; i < 3; i++) {
+			if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
+			this.hand.get(i).CardSuit()== this.hand.get(i+2).CardSuit()) {
+				if(this.hand.get(i).CardValue() > 7 &&
+					this.hand.get(i+1).CardValue() > 7 &&
+					this.hand.get(i+2).CardValue() > 7) {
+						this.index = i;
+						return true;
+				}
 			}
 		}
+		this.SortHand();
 		return false;
 	}
 	
@@ -735,7 +722,6 @@ public class Hand {
 	}	
 	
 	public boolean checkStraight3FlushT3() {
-		int f = 0;
 		int i = 0;
 		this.SortHandSuit();
 		for(i = 0; i < 3; i++) {
@@ -768,10 +754,6 @@ public class Hand {
 		return false;
 	}
 	
-	public boolean Straight3FlushT3() {
-		return false;
-	}
-	
 	public boolean checkKjKq() {
 		boolean flag = false;
 		for(int i = 0; i < 5; i++) {
@@ -783,10 +765,8 @@ public class Hand {
 		if(flag) {
 			for(int i = 0; i < 5; i++) {
 				if (this.hand.get(i).CardRank() == 'J' || this.hand.get(i).CardRank() == 'Q') {
-					if (this.hand.get(this.index).CardSuit() == this.hand.get(i).CardSuit()) {
-						this.index2 = i;
-						return true;
-					}
+					this.index2 = i;
+					return true;
 				}
 			}
 		}
@@ -1067,10 +1047,14 @@ public class Hand {
 		String Aces = null;
 		boolean flag = false;
 		for(int i = 0; i < 5; i++) {
-			if(this.hand_original.get(i).CardRank() == this.hand.get(1).CardRank() ||
-			this.hand_original.get(i).CardRank() == this.hand.get(2).CardRank() ||
-			this.hand_original.get(i).CardRank() == this.hand.get(3).CardRank() ||
-			this.hand_original.get(i).CardRank() == this.hand.get(4).CardRank()) {
+			if((this.hand_original.get(i).CardRank() == this.hand.get(i).CardRank() &&
+				this.hand_original.get(i).CardSuit() == this.hand.get(i).CardSuit()) ||
+			(this.hand_original.get(i).CardRank() == this.hand.get(i+1).CardRank() &&
+					this.hand_original.get(i).CardSuit() == this.hand.get(i+1).CardSuit()) ||
+			(this.hand_original.get(i).CardRank() == this.hand.get(i+2).CardRank() &&
+					this.hand_original.get(i).CardSuit() == this.hand.get(i).CardSuit()) ||
+			(this.hand_original.get(i).CardRank() == this.hand.get(i+3).CardRank() &&
+			this.hand_original.get(i).CardSuit() == this.hand.get(i).CardSuit())) {
 				
 				if(!flag) {
 					Aces = String.valueOf(i);
@@ -1143,7 +1127,6 @@ public class Hand {
 		return Aces;
 	}
 	
-
 	public String searchStraight3Flush() {
 		String Aces = null;
 		boolean flag = false;

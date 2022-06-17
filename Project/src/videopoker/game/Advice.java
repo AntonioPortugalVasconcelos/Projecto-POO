@@ -1,8 +1,5 @@
 package videopoker.game;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class Advice {
 	Hand hand;
@@ -66,7 +63,7 @@ public class Advice {
 			return;
 		}
 		if(this.hand.check3RoyalFlush()) {
-			String Aces = this.hand.search3RoyalFlush();
+			String Aces = this.hand.searchSameSuit();
 			System.out.printf("player should hold cards %s\n", Aces);
 			return;
 		}
@@ -101,7 +98,7 @@ public class Advice {
 			return;
 		}
 		if(this.hand.check3Flush2High()) {
-			String Aces = this.hand.search3Flush();
+			String Aces = this.hand.searchSameSuit();
 			System.out.printf("player should hold cards %s\n", Aces);
 			return;
 		}
@@ -155,9 +152,6 @@ public class Advice {
 			System.out.printf("player should hold cards %s\n", low);
 			return;
 		}
-		if(this.hand.Straight3FlushT3()) {
-			
-		}
 		if(this.hand.checkKjKq()) {
 			String Aces = this.hand.search2Pair();
 			System.out.printf("player should hold cards %s\n", Aces);
@@ -184,7 +178,7 @@ public class Advice {
 			return;
 		}
 		if(this.hand.check3Flush()) {
-			String Aces = this.hand.search3Flush();
+			String Aces = this.hand.searchSameSuit();
 			System.out.printf("player should hold cards %s\n", Aces);
 			return;
 		}
