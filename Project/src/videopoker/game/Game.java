@@ -18,6 +18,7 @@ public class Game {
 	private int plays = 0;
 	private int bet;
 	private int state;
+	private boolean hasBet = false;
 	
 	public Game(GameMode mode) {
 		this.mode = mode;
@@ -38,11 +39,17 @@ public class Game {
 	public void initializeGameS() {
 		this.credit = new Credit(mode.StartingCredit());
 		this.initialCredit = new Credit(mode.StartingCredit());
-		this.deck = (((SimulationMode) mode).createDeck());
+		this.deck = (((SimulationMode) mode).createDeck(this.deck));
 		this.stats = new Statistics();
 		this.plays = (((SimulationMode) mode).GetPlays());
 		this.bet = (((SimulationMode) mode).BetValue());
 		this.state = 0;
+		
+	}
+
+	
+	public Deck GetDeck() {
+		return this.deck;
 		
 	}
 	
@@ -76,53 +83,69 @@ public class Game {
 		System.out.printf("-cmd %s\n", command);
 		switch (command.charAt(0)) {
 			case 'b':
-				if (commands == null) {
-					if (this.credit.Add(-bet)) {
-						this.credit.Add(bet);
-						System.out.printf("b: illegal amount \n");
-						break;
-					}
-					
-				}
-				else if (command.length() != 1) {
-					this.bet = Integer.valueOf(command.split(" ")[1]);
-					if (this.bet < 1 || this.bet > 5) {
-						System.out.printf("b: illegal amount \n");
-						break;
+				if (!this.hasBet) {
+					if (commands == null) {
+						if (this.credit.Add(-bet)) {
+							this.credit.Add(bet);
+							System.out.printf("b: illegal amount \n");
+							break;
+						}
 						
 					}
-					if (this.credit.Add(-bet)) {
-						this.credit.Add(bet);
-						System.out.printf("b: illegal amount \n");
-						break;
+					else if (command.length() != 1) {
+						this.bet = Integer.valueOf(command.split(" ")[1]);
+						if (this.bet < 1 || this.bet > 5) {
+							System.out.printf("b: illegal amount \n");
+							break;
+							
+						}
+						if (this.credit.Add(-bet)) {
+							this.credit.Add(bet);
+							System.out.printf("b: illegal amount \n");
+							break;
+						}
+						
+					}else {
+						this.bet = 5;
+						if (this.credit.Add(-bet)) {
+							this.credit.Add(bet);
+							System.out.printf("b: illegal amount %s\n", this.bet);
+							break;
+						}
+						
 					}
+					System.out.printf("player is betting %s\n", this.bet);
+					this.hasBet = true;
+					this.stats.AddBet(bet);
+					break;
 					
 				}else {
-					this.bet = 5;
-					if (this.credit.Add(-bet)) {
-						this.credit.Add(bet);
-						System.out.printf("b: illegal amount %s\n", this.bet);
-						break;
-					}
-					
+					System.out.printf("b: player has already bet\n");
+					break;
 				}
-				System.out.printf("player is betting %s\n", this.bet);
-				this.stats.AddBet(bet);
-				break;
+				
 				
 			case '$':
 				System.out.printf("player's credit is %d\n", this.credit.GetValue());
 				break;
 				
-			case 'd':;
-				ArrayList<Card> cards = new ArrayList<Card>();
-				for (int i = 0; i < 5; i++) {
-					cards.add(deck.drawCard());
+			case 'd':
+				if (this.hasBet) {
+					ArrayList<Card> cards = new ArrayList<Card>();
+					for (int i = 0; i < 5; i++) {
+						cards.add(deck.drawCard());
+					}
+					this.hand = new Hand(cards);
+					this.state = 1;
+					System.out.printf("player's hand %s\n", this.hand.toString());
+					break;
+					
+				}else {
+					System.out.printf("player must bet first\n");
+					break;
+					
 				}
-				this.hand = new Hand(cards);
-				this.state = 1;
-				System.out.printf("player's hand %s\n", this.hand.toString());
-				break;
+				
 				
 			case 'h':
 				System.out.printf("h: can't hold right now\n");
@@ -148,7 +171,10 @@ public class Game {
 				System.out.printf("---------------------------\n");	
 				System.out.printf("Total                    %d\n", this.stats.TotalPlays());	
 				System.out.printf("---------------------------\n");
-				System.out.printf("Credit             %d(%f%%)\n", this.credit.GetValue(), (float)(this.initialCredit.GetValue()-this.credit.GetValue())/this.stats.GetBets()*100);
+				System.out.printf("Credit             %d(%f%%)\n", this.credit.GetValue(), (float)(this.credit.GetValue()-this.initialCredit.GetValue())/this.stats.GetBets()*100);
+				break;
+			default:
+				System.out.printf("Invalid command\n");
 				break;
 		
 		}
@@ -183,6 +209,7 @@ public class Game {
 				System.out.printf("player's hand %s\n", this.hand.toString());
 				this.credit.Add(HandCheck(this.hand, this.bet));
 				System.out.printf("%d\n\n", this.credit.GetValue());
+				this.deck = this.mode.createDeck(this.deck);
 				this.state = 0;
 				break;
 				
@@ -207,7 +234,10 @@ public class Game {
 				System.out.printf("---------------------------\n");	
 				System.out.printf("Total                    %d\n", this.stats.TotalPlays());	
 				System.out.printf("---------------------------\n");
-				System.out.printf("Credit             %d(%f%%)\n", this.credit.GetValue(), (float)(this.initialCredit.GetValue()-this.credit.GetValue())/this.stats.GetBets()*100);
+				System.out.printf("Credit             %d(%f%%)\n", this.credit.GetValue(), (float)(this.credit.GetValue()-this.initialCredit.GetValue())/this.stats.GetBets()*100);
+				break;
+			default:
+				System.out.printf("Invalid command\n");
 				break;
 		
 		}
@@ -215,23 +245,35 @@ public class Game {
 	}
 	
 	
-	public String TurnStart() {
+	public void TurnStart() {
 		this.GetCommands();
+		if (command.equals("")) 
+		{
+			System.out.printf("Invalid command\n");
+			return;
+			
+		}
 		this.DoCommandStart(command);
-		this.plays--;
-		return command;
+		return;
 		
 	}
 	
-	public String TurnEnd() {
+	public void TurnEnd() {
 		this.GetCommands();
+		if (command.equals("")) 
+		{
+			System.out.printf("Invalid command\n");
+			return;
+			
+		}
 		this.DoCommandEnd(command);
-		this.plays--;
-		return command;
+		this.hasBet = false;
+		return;
 		
 	}
 	
 	private int HandCheck(Hand hand, int bet) {
+		this.plays--;
 		switch (hand.handType()){
 			case 12:
 				this.stats.AddStat(9);

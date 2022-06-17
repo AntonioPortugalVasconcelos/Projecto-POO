@@ -30,7 +30,7 @@ public class VideoPokerMain {
     
 		}
 		
-		while(game.GetCommandLenght() > 0 || game.Getnumberplays() <= 0) {
+		while(game.GetCommandLenght() > 0 || game.Getnumberplays() > 0) {
 			if (game.Getstate() == 0) {
 				game.TurnStart();
 				
