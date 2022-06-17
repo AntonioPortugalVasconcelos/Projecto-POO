@@ -45,7 +45,7 @@ public class SimulationMode implements GameMode{
 		
 	}
 
-    public Deck createDeck() {
+    public Deck createDeck(Deck legacyDeck) {
     	char[] suits = {'H', 'D', 'S' , 'C'};
     	char [] values = {'2','3','4','5','6','7','8','9','T','J','Q','K','A'};
     	ArrayList<Card> cards = new ArrayList<Card>();
