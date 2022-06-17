@@ -3,13 +3,9 @@ package videopoker.mode;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import videopoker.game.Card;
 import videopoker.game.Deck;
-import videopoker.game.Rank;
-import videopoker.game.Suit;
 import videopoker.interfaces.GameMode;
 
 public class DebugMode implements GameMode {
@@ -102,6 +98,6 @@ public class DebugMode implements GameMode {
 	public Deck createDeck(Deck deck) {
 		return deck;
 		
-	}
+    }
 
 }
