@@ -26,9 +26,11 @@ public class Advice {
 		}
 		
 		if(this.hand.checkAlmostRoyalFlush()) {
+			String Aces = this.hand.searchAlmostRoyalFlush();
+			System.out.printf("player should hold cards %s\n", Aces);
 			return;
 		}
-		if(this.hand.check3Aces()) {
+		if(this.hand.check3Aces()) {	
 			String Aces = this.hand.searchSameKind();
 			System.out.printf("player should hold cards %s\n", Aces);
 			return;
@@ -43,8 +45,11 @@ public class Advice {
 			return;
 		}
 		if(this.hand.checkAlmostStraightFlush()) {
+			String Aces = this.hand.search4StraightFlush();
+			System.out.printf("player should hold cards %s\n", Aces);
 			return;
 		}
+
 		if(i == 3) {
 			String twoPairs = this.hand.search2Pair();
 			System.out.printf("player should hold cards %s\n", twoPairs);
@@ -61,10 +66,12 @@ public class Advice {
 			return;
 		}
 		if(this.hand.check3RoyalFlush()) {
+			String Aces = this.hand.search3RoyalFlush();
+			System.out.printf("player should hold cards %s\n", Aces);
 			return;
 		}
 		if(this.hand.checkAlmostStraight()) {
-			String straight = this.hand.search4Straight();
+			String straight = this.hand.searchAlmostStraight();
 			System.out.printf("player should hold cards %s\n", straight);
 			return;
 		}
@@ -78,18 +85,51 @@ public class Advice {
 			System.out.printf("player should hold cards %s\n", low);
 			return;
 		}
-		if(this.hand.Straight3Flushout) {
-			
+		if(this.hand.checkStraight3FlushT1()) {
+			String low = this.hand.searchStraight3Flush();
+			System.out.printf("player should hold cards %s\n", low);
+			return;
+		}
+		if(this.hand.check4InStrainght3High()) {
+			String low = this.hand.searchAlmostStraight();
+			System.out.printf("player should hold cards %s\n", low);
+			return;
 		}
 		if(this.hand.checkQJSuit()) {
 			String Aces = this.hand.search2Pair();
 			System.out.printf("player should hold cards %s\n", Aces);
 			return;
 		}
+		if(this.hand.check3Flush2High()) {
+			String Aces = this.hand.search3Flush();
+			System.out.printf("player should hold cards %s\n", Aces);
+			return;
+		}
+		if(this.hand.check2SuitHigh()) {
+			String Aces = this.hand.search2HighSuit();
+			System.out.printf("player should hold cards %s\n", Aces);
+			return;
+		}
+		if(this.hand.check4InStrainght2High()) {
+			String low = this.hand.searchAlmostStraight();
+			System.out.printf("player should hold cards %s\n", low);
+			return;
+		}
+		if(this.hand.checkStraight3FlushT2()) {
+			String low = this.hand.searchStraight3Flush();
+			System.out.printf("player should hold cards %s\n", low);
+			return;
+		}
+		if(this.hand.check4InStrainght1High()) {
+			String low = this.hand.searchAlmostStraight();
+			System.out.printf("player should hold cards %s\n", low);
+			return;
+		}
 		if(this.hand.checkKQJ()) {
 			String low = this.hand.searchAKQJ();
 			System.out.printf("player should hold cards %s\n", low);
 			return;
+		}
 		if(this.hand.checkJTSuit()) {
 			String Aces = this.hand.search2Pair();
 			System.out.printf("player should hold cards %s\n", Aces);
@@ -100,15 +140,22 @@ public class Advice {
 			System.out.printf("player should hold cards %s\n", Aces);
 			return;
 		}
-		if(this.hand.OneHigh3Flush) {
-			
+		if(this.hand.check3Flush1High()) {
+			String Aces = this.hand.search3Flush();
+			System.out.printf("player should hold cards %s\n", Aces);
+			return;
 		}
 		if(this.hand.checkQTSuit()) {
 			String Aces = this.hand.search2Pair();
 			System.out.printf("player should hold cards %s\n", Aces);
 			return;
 		}
-		if(this.hand.Straight3FlushT3) {
+		if(this.hand.checkStraight3FlushT3()) {
+			String low = this.hand.searchStraight3Flush();
+			System.out.printf("player should hold cards %s\n", low);
+			return;
+		}
+		if(this.hand.Straight3FlushT3()) {
 			
 		}
 		if(this.hand.checkKjKq()) {
@@ -131,11 +178,15 @@ public class Advice {
 			System.out.printf("player should hold cards %s\n", Aces);
 			return;
 		}
-		if(this.hand.InsideStraightLow) {
-			
+		if(this.hand.InsideStraightLow()) {
+			String Aces = this.hand.searchAlmostStraight();
+			System.out.printf("player should hold cards %s\n", Aces);
+			return;
 		}
-		if(this.hand.threeFlush) {
-			
+		if(this.hand.check3Flush()) {
+			String Aces = this.hand.search3Flush();
+			System.out.printf("player should hold cards %s\n", Aces);
+			return;
 		}
 		else {
 			System.out.printf("player shouldn't hold cards\n");

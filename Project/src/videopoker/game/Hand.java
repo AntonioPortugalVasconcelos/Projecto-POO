@@ -20,6 +20,10 @@ public class Hand {
 		Comparator<Card> handComparer = Comparator.comparing(Card::CardValue);
 		Collections.sort(hand, handComparer);
 	}
+	public void SortHandSuit() {
+		Comparator<Card> handComparer = Comparator.comparing(Card::CardSuit);
+		Collections.sort(hand, handComparer);
+	}
 	public void addHand(Card a) {
 		this.hand.add(a);
 	}
@@ -246,9 +250,26 @@ public class Hand {
 	
 	public boolean checkAlmostRoyalFlush() {
 		
-		return true;
+		//this.SortHandSuit();
+		for(int i = 0; i < 2; i++) {
+			if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
+			this.hand.get(i).CardSuit()== this.hand.get(i+2).CardSuit() &&
+			this.hand.get(i).CardSuit()== this.hand.get(i+3).CardSuit()) {
+				if(this.hand.get(2).CardValue() > 7 &&
+				this.hand.get(2).CardValue() > 7 &&
+				this.hand.get(2).CardValue() > 7 &&
+				this.hand.get(2).CardValue() > 7) {
+					this.index = i;
+					return true;
+				}
+			}
+		}
+
+		//this.SortHand();
+		return false;
 		
 	}
+	
 	public boolean checkAlmostFlush(){
 		int i = 0;
 		if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
@@ -277,6 +298,7 @@ public class Hand {
 			}
 		return false;
 	}
+	
 	public boolean checkAlmostStraight(){
 		for(int i = 0; i < 2; i++) {
 			if (this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
@@ -289,6 +311,7 @@ public class Hand {
 		}
 		return false;
 	}
+	
 	public boolean checkAlmostStraightFlush(){
 		int i = 0;
 
@@ -344,9 +367,21 @@ public class Hand {
 		}
 		return false;
 	}
+	
 	public boolean check3RoyalFlush(){
-		return true;
+
+		if(this.hand.get(2).CardSuit()== this.hand.get(3).CardSuit() &&
+			this.hand.get(2).CardSuit()== this.hand.get(4).CardSuit()) {
+			
+			if(this.hand.get(2).CardValue() > 7 &&
+			this.hand.get(3).CardValue() > 7 &&
+			this.hand.get(4).CardValue() > 7) {
+				return true;
+			}
+		}
+		return false;
 	}
+	
 	public boolean check3Aces() {
 		if(check3Kind()) {
 			if(this.hand.get(this.index).CardRank() == 'A') {
@@ -363,6 +398,232 @@ public class Hand {
 			return true;
 		}
 		return false;	
+	}
+	
+	public boolean checkStraight3FlushT1() {
+		int f = 0;
+		int i = 0;
+		this.SortHandSuit();
+		for(i = 0; i < 5; i++) {
+			if(this.hand.get(i).CardValue() > 8) {
+				f++;
+			}
+		}
+		for(i = 0; i < 3; i++) {
+			if(this.hand.get(i).CardSuit() == this.hand.get(2).CardSuit() &&
+					this.hand.get(i+1).CardSuit() == this.hand.get(2).CardSuit() &&
+					this.hand.get(i+2).CardSuit() == this.hand.get(2).CardSuit()) {
+				if(f==0 || f == 1 || f == 2) {
+					if (this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+							this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue()) {
+						return true;
+					}
+							
+				}
+				if(f == 1 || f == 2) {
+					if (this.hand.get(i).CardValue()+2 == this.hand.get(i+1).CardValue() &&
+							this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue()) {
+								
+							return true;
+					}
+					if (this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+							this.hand.get(i+1).CardValue()+2 == this.hand.get(i+2).CardValue()) {
+								
+							return true;
+					}
+				}
+				if(f == 2) {
+					if (this.hand.get(i).CardValue()+ 2 == this.hand.get(i+1).CardValue() &&
+							this.hand.get(i+1).CardValue()+2 == this.hand.get(i+2).CardValue()) {
+								
+							return true;
+					}
+				}
+			}
+		}	
+		this.SortHand();
+		return false;
+	}
+	
+	public boolean check4InStrainght3High() {
+		int i = 0;
+		if(this.hand.get(2).CardValue() > 8 &&
+				this.hand.get(3).CardValue() > 8 &&
+				this.hand.get(4).CardValue() > 8) {
+			if(this.hand.get(1).CardValue() > 8 &&
+					this.hand.get(2).CardValue() > 8 &&
+					this.hand.get(3).CardValue() > 8 &&
+					this.hand.get(4).CardValue() > 8) {
+				this.index = 1;
+				return true;
+			}
+			for (i = 1; i < 2; i++) {
+				if(this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+				this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue() &&
+				this.hand.get(i+2).CardValue()+2 == this.hand.get(i+3).CardValue()) {
+					this.index = i;
+					return true;
+				}
+			}
+			for (i = 1; i < 2; i++) {
+				if(this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+				this.hand.get(i+1).CardValue()+2 == this.hand.get(i+2).CardValue() &&
+				this.hand.get(i+2).CardValue()+1 == this.hand.get(i+3).CardValue()) {
+					this.index = i;
+					return true;
+				}
+			}
+			for (i = 1; i < 2; i++) {
+				if(this.hand.get(i).CardValue()+2 == this.hand.get(i+1).CardValue() &&
+				this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue() &&
+				this.hand.get(i+2).CardValue()+1 == this.hand.get(i+3).CardValue()) {
+					this.index = i;
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean check3Flush2High() {
+		this.SortHandSuit();
+		for (int i = 0; i < 3; i++) {
+			if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
+				this.hand.get(i).CardSuit()== this.hand.get(i+2).CardSuit()) {
+				if((this.hand.get(i).CardValue() > 8 && this.hand.get(i+1).CardValue() > 8) ||
+					(this.hand.get(i).CardValue() > 8 && this.hand.get(i+2).CardValue() > 8) ||
+					(this.hand.get(i+1).CardValue() > 8 && this.hand.get(i+2).CardValue() > 8)) {
+					this.index = i;
+					return true;
+				}
+			}
+		}
+		this.SortHand();
+		return false;
+	}
+	
+	public boolean check2SuitHigh() {
+		this.SortHandSuit();
+		for (int i = 0; i < 4; i++) {
+			if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit()) {
+				if((this.hand.get(i).CardValue() > 8 && this.hand.get(i+1).CardValue() > 8)) {
+					this.index = i;
+					return true;
+				}
+			}
+		}
+		this.SortHand();
+		return false;
+	}
+	
+	public boolean check4InStrainght2High() {
+		int i = 0;
+		if(this.hand.get(2).CardValue() > 8 &&
+			this.hand.get(3).CardValue() > 8) {
+
+			for (i = 1; i < 2; i++) {
+				if(this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+				this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue() &&
+				this.hand.get(i+2).CardValue()+2 == this.hand.get(i+3).CardValue()) {
+					this.index = i;
+					return true;
+				}
+			}
+			for (i = 1; i < 2; i++) {
+				if(this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+				this.hand.get(i+1).CardValue()+2 == this.hand.get(i+2).CardValue() &&
+				this.hand.get(i+2).CardValue()+1 == this.hand.get(i+3).CardValue()) {
+					this.index = i;
+					return true;
+				}
+			}
+			for (i = 1; i < 2; i++) {
+				if(this.hand.get(i).CardValue()+2 == this.hand.get(i+1).CardValue() &&
+				this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue() &&
+				this.hand.get(i+2).CardValue()+1 == this.hand.get(i+3).CardValue()) {
+					this.index = i;
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean checkStraight3FlushT2() {
+		int f = 0;
+		int i = 0;
+		this.SortHandSuit();
+		for(i = 0; i < 5; i++) {
+			if(this.hand.get(i).CardValue() > 8) {
+				f++;
+			}
+		}
+		for(i = 0; i < 3; i++) {
+			if(this.hand.get(i).CardSuit() == this.hand.get(2).CardSuit() &&
+					this.hand.get(i+1).CardSuit() == this.hand.get(2).CardSuit() &&
+					this.hand.get(i+2).CardSuit() == this.hand.get(2).CardSuit()) {
+				if(f==0 || f == 1) {
+					if (this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+							this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue()) {
+						return true;
+					}
+							
+				}
+				if(f == 0 || f == 1) {
+					if (this.hand.get(i).CardValue()+2 == this.hand.get(i+1).CardValue() &&
+							this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue()) {
+								
+							return true;
+					}
+					if (this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+							this.hand.get(i+1).CardValue()+2 == this.hand.get(i+2).CardValue()) {
+								
+							return true;
+					}
+				}
+				if(f == 1) {
+					if (this.hand.get(i).CardValue()+ 2 == this.hand.get(i+1).CardValue() &&
+							this.hand.get(i+1).CardValue()+2 == this.hand.get(i+2).CardValue()) {
+								
+							return true;
+					}
+				}
+			}
+		}	
+		this.SortHand();
+		return false;
+	}
+	
+	public boolean check4InStrainght1High() {
+		int i = 0;
+		if(this.hand.get(2).CardValue() > 8) {
+
+			for (i = 1; i < 2; i++) {
+				if(this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+				this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue() &&
+				this.hand.get(i+2).CardValue()+2 == this.hand.get(i+3).CardValue()) {
+					this.index = i;
+					return true;
+				}
+			}
+			for (i = 1; i < 2; i++) {
+				if(this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+				this.hand.get(i+1).CardValue()+2 == this.hand.get(i+2).CardValue() &&
+				this.hand.get(i+2).CardValue()+1 == this.hand.get(i+3).CardValue()) {
+					this.index = i;
+					return true;
+				}
+			}
+			for (i = 1; i < 2; i++) {
+				if(this.hand.get(i).CardValue()+2 == this.hand.get(i+1).CardValue() &&
+				this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue() &&
+				this.hand.get(i+2).CardValue()+1 == this.hand.get(i+3).CardValue()) {
+					this.index = i;
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	public boolean checkQJSuit() {
@@ -435,6 +696,23 @@ public class Hand {
 		return false;
 	}
 	
+	public boolean check3Flush1High() {
+		this.SortHandSuit();
+		for (int i = 0; i < 3; i++) {
+			if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
+				this.hand.get(i).CardSuit()== this.hand.get(i+2).CardSuit()) {
+				if(this.hand.get(i).CardValue() > 8 ||
+					this.hand.get(i+1).CardValue() > 8 ||
+					this.hand.get(i+2).CardValue() > 8) {
+					this.index = i;
+					return true;
+				}
+			}
+		}
+		this.SortHand();
+		return false;
+	}
+	
 	public boolean checkQTSuit() {
 		boolean flag = false;
 		for(int i = 0; i < 5; i++) {
@@ -455,6 +733,44 @@ public class Hand {
 		}
 		return false;
 	}	
+	
+	public boolean checkStraight3FlushT3() {
+		int f = 0;
+		int i = 0;
+		this.SortHandSuit();
+		for(i = 0; i < 3; i++) {
+			if(this.hand.get(i).CardSuit() == this.hand.get(2).CardSuit() &&
+				this.hand.get(i+1).CardSuit() == this.hand.get(2).CardSuit() &&
+				this.hand.get(i+2).CardSuit() == this.hand.get(2).CardSuit()) {
+
+				if (this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+						this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue()) {
+					return true;
+				}
+				if (this.hand.get(i).CardValue()+2 == this.hand.get(i+1).CardValue() &&
+						this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue()) {
+							
+						return true;
+				}
+				if (this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+						this.hand.get(i+1).CardValue()+2 == this.hand.get(i+2).CardValue()) {
+							
+						return true;
+				}
+				if (this.hand.get(i).CardValue()+ 2 == this.hand.get(i+1).CardValue() &&
+						this.hand.get(i+1).CardValue()+2 == this.hand.get(i+2).CardValue()) {
+							
+						return true;
+				}
+			}
+		}	
+		this.SortHand();
+		return false;
+	}
+	
+	public boolean Straight3FlushT3() {
+		return false;
+	}
 	
 	public boolean checkKjKq() {
 		boolean flag = false;
@@ -518,6 +834,47 @@ public class Hand {
 		return false;
 	}
 
+	public boolean InsideStraightLow() {
+		int i = 0;
+		for (i = 0; i < 2; i++) {
+			if(this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+			this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue() &&
+			this.hand.get(i+2).CardValue()+2 == this.hand.get(i+3).CardValue()) {
+				this.index = i;
+				return true;
+			}
+		}
+		for (i = 0; i < 2; i++) {
+			if(this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+			this.hand.get(i+1).CardValue()+2 == this.hand.get(i+2).CardValue() &&
+			this.hand.get(i+2).CardValue()+1 == this.hand.get(i+3).CardValue()) {
+				this.index = i;
+				return true;
+			}
+		}
+		for (i = 0; i < 2; i++) {
+			if(this.hand.get(i).CardValue()+2 == this.hand.get(i+1).CardValue() &&
+			this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue() &&
+			this.hand.get(i+2).CardValue()+1 == this.hand.get(i+3).CardValue()) {
+				this.index = i;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean check3Flush() {
+		this.SortHandSuit();
+		for (int i = 0; i < 3; i++) {
+			if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
+				this.hand.get(i).CardSuit()== this.hand.get(i+2).CardSuit()) {
+				this.index = i;
+				return true;
+			}
+		}
+		this.SortHand();
+		return false;
+	}
 		
 	
 	
@@ -541,6 +898,7 @@ public class Hand {
 		}	
 		return Aces;
 	}
+	
 	public String search2Pair() {
 		String Aces = null;
 		boolean flag = false;
@@ -558,6 +916,7 @@ public class Hand {
 		}
 		return Aces;
 	}
+	
 	public String searchSameSuit() {
 		String Aces = null;
 		boolean flag = false;
@@ -574,6 +933,7 @@ public class Hand {
 		}	
 		return Aces;
 	}
+	
 	public String search4Straight() {
 		String Aces = null;
 		boolean flag = false;
@@ -593,6 +953,7 @@ public class Hand {
 		}	
 		return Aces;
 	}
+	
 	public String searchAKQJ() {
 		String Aces = null;
 		boolean flag = false;
@@ -701,6 +1062,125 @@ public class Hand {
 		}
 		return Aces;
 	}
-}
+	
+	public String searchAlmostRoyalFlush() {
+		String Aces = null;
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if(this.hand_original.get(i).CardRank() == this.hand.get(1).CardRank() ||
+			this.hand_original.get(i).CardRank() == this.hand.get(2).CardRank() ||
+			this.hand_original.get(i).CardRank() == this.hand.get(3).CardRank() ||
+			this.hand_original.get(i).CardRank() == this.hand.get(4).CardRank()) {
+				
+				if(!flag) {
+					Aces = String.valueOf(i);
+					flag = true;
+				}
+				else if(flag) {
+					Aces = Aces + " " + String.valueOf(i);
+				}
+			}
+		}
+		return Aces;
+	}
+	
+	public String search3RoyalFlush() {
+		String Aces = null;
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if(this.hand_original.get(i).CardRank() == this.hand.get(2).CardRank() ||
+			this.hand_original.get(i).CardRank() == this.hand.get(3).CardRank() ||
+			this.hand_original.get(i).CardRank() == this.hand.get(4).CardRank()) {
+				
+				if(!flag) {
+					Aces = String.valueOf(i);
+					flag = true;
+				}
+				else if(flag) {
+					Aces = Aces + " " + String.valueOf(i);
+				}
+			}
+		}
+		return Aces;
+	}
+	
+	public String search3Flush() {
+		String Aces = null;
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if(this.hand_original.get(i).CardSuit() == this.hand.get(this.index).CardSuit()) {
+				
+				if(!flag) {
+					Aces = String.valueOf(i);
+					flag = true;
+				}
+				else if(flag) {
+					Aces = Aces + " " + String.valueOf(i);
+				}
+			}
+		}
+		return Aces;
+	}
 
+	public String searchAlmostStraight() {
+		String Aces = null;
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if(this.hand_original.get(i).CardRank() == this.hand.get(this.index).CardRank() ||
+			this.hand_original.get(i).CardRank() == this.hand.get(this.index + 1).CardRank() ||
+			this.hand_original.get(i).CardRank() == this.hand.get(this.index + 2).CardRank() ||
+			this.hand_original.get(i).CardRank() == this.hand.get(this.index + 3).CardRank()) {
+				
+				if(!flag) {
+					Aces = String.valueOf(i);
+					flag = true;
+				}
+				else if(flag) {
+					Aces = Aces + " " + String.valueOf(i);
+				}
+			}
+		}
+		return Aces;
+	}
+	
+
+	public String searchStraight3Flush() {
+		String Aces = null;
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if(this.hand_original.get(i).CardSuit() == this.hand.get(2).CardSuit()) {
+				
+				if(!flag) {
+					Aces = String.valueOf(i);
+					flag = true;
+				}
+				else if(flag) {
+					Aces = Aces + " " + String.valueOf(i);
+				}
+			}
+		}
+		return Aces;
+	}
+
+	public String search2HighSuit() {
+		String Aces = null;
+		boolean flag = false;
+		for(int i = 0; i < 5; i++) {
+			if(this.hand_original.get(i).CardRank() == this.hand.get(this.index).CardRank() ||
+			this.hand_original.get(i).CardRank() == this.hand.get(this.index + 1).CardRank()) {
+				
+				if(!flag) {
+					Aces = String.valueOf(i);
+					flag = true;
+				}
+				else if(flag) {
+					Aces = Aces + " " + String.valueOf(i);
+				}
+			}
+		}
+		return Aces;
+	}
+
+
+}
 
