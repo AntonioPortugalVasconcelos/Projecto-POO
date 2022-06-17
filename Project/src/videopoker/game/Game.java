@@ -38,7 +38,7 @@ public class Game {
 	public void initializeGameS() {
 		this.credit = new Credit(mode.StartingCredit());
 		this.initialCredit = new Credit(mode.StartingCredit());
-		this.deck = (((SimulationMode) mode).createDeck());
+		this.deck = (((SimulationMode) mode).createDeck(this.deck));
 		this.stats = new Statistics();
 		this.plays = (((SimulationMode) mode).GetPlays());
 		this.bet = (((SimulationMode) mode).BetValue());
@@ -129,7 +129,7 @@ public class Game {
 				break;
 				
 			case 'a':
-				System.out.printf("advice\n");
+				System.out.printf("player should draw cards\n");
 				break;				
 				
 			case 's':
