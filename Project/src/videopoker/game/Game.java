@@ -152,7 +152,7 @@ public class Game {
 				break;
 				
 			case 'a':
-				System.out.printf("advice\n");
+				System.out.printf("player should draw cards\n");
 				break;				
 				
 			case 's':
