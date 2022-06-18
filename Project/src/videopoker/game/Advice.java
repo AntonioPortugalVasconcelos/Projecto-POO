@@ -6,12 +6,14 @@ public class Advice {
 
 	public Advice(Hand hand) {
 		super();
-		this.hand = hand;
+		this.hand = hand;	
 	}
 	
 	public void getAdvice() {
 		int i;		
+		System.out.printf("\n%s\n%s\n\n",this.hand.toString(), this.hand.get2Hand());
 		i = this.hand.handType();
+		System.out.printf("\n%s\n%s\n\n",this.hand.toString(), this.hand.get2Hand());
 		if(i == 12 || i == 11) {
 			System.out.printf("player should hold cards 1 2 3 4 5\n");
 			return;

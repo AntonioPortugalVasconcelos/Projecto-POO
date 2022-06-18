@@ -33,6 +33,19 @@ public class Hand {
 	public ArrayList<Card> getHand(){
 		return this.hand;
 	}
+	public String get2Hand(){
+		String strHand = null;
+		for(int i = 0; i < 5; i++) {
+			if(i == 0) {
+				strHand = Character.toString(this.hand_original.get(i).CardRank()) + Character.toString(this.hand_original.get(i).CardSuit());
+			}
+			else {
+				strHand = strHand + " " + Character.toString(this.hand_original.get(i).CardRank()) + Character.toString(this.hand_original.get(i).CardSuit());
+			}
+		}
+		return strHand;
+	}
+	
 	public String toString() {
 		String strHand = null;
 		for(int i = 0; i < 5; i++) {
