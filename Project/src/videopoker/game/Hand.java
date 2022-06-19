@@ -11,7 +11,7 @@ public class Hand {
 	public Hand(ArrayList<Card> hand) {
 		super();
 		this.hand = hand;
-		this.hand_original = hand;
+		this.hand_original = this.hand;
 		this.index = -1;
 		this.index2 = -1;
 	}
