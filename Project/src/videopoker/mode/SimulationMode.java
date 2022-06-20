@@ -30,16 +30,21 @@ public class SimulationMode implements GameMode {
 	
 	public String[] NextCommand(String prevCommand) {
 		this.advice = new Advice(hand);
-		if(prevCommand.equals("") || prevCommand.charAt(0) == 'h') {
-	    	String[] returnStrings = new String[]{"b", null};
+		if(prevCommand == null) {
+	    	String[] returnStrings = new String[]{"b", "b"};
 	    	return returnStrings;
 	    	
-		} else if(prevCommand.equals("b")) {
-	    	String[] returnStrings = new String[]{"d", null};
+		} else if (prevCommand.charAt(0) == 'h'){
+	    	String[] returnStrings = new String[]{"b", "b"};
+	    	return returnStrings;
+			
+		}else if(prevCommand.equals("b")) {
+	    	String[] returnStrings = new String[]{"d", "d"};
 	    	return returnStrings;
 			
 		}else {
-	    	String[] returnStrings = new String[]{advice.getAdv(), null};
+			System.out.printf("-cmd a\n");
+	    	String[] returnStrings = new String[]{advice.getAdv(), "h"};
 	    	return returnStrings;
 			
 			

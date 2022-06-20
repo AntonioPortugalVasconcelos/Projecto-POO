@@ -12,13 +12,12 @@ public class Game {
 	private Deck deck;
 	private GameMode mode;
 	private Credit credit;
-	private Credit initialCredit;
 	private Statistics stats;
 	private Advice advice;
 	private String commands = null;
 	private String command;
 	private int plays = 0;
-	private int simBet = 0;
+	private int simBet = 1;
 	private int bet;
 	private int state;
 	private boolean hasBet = false;
@@ -40,7 +39,6 @@ public class Game {
 	 */
 	public void initializeGameD() {
 		this.credit = new Credit(mode.StartingCredit());
-		this.initialCredit = new Credit(mode.StartingCredit());
 		this.commands = ((DebugMode) mode).getCommands();
 		this.deck = new Deck(((DebugMode) mode).GetDeck());
 		this.stats = new Statistics();
@@ -52,7 +50,6 @@ public class Game {
 	 */
 	public void initializeGameP() {
 		this.credit = new Credit(mode.StartingCredit());
-		this.initialCredit = new Credit(mode.StartingCredit());
 		this.deck = (((PlayerMode) mode).createDeck(this.deck));
 		this.stats = new Statistics();
 		this.plays = (((PlayerMode) mode).GetPlays());
@@ -65,7 +62,6 @@ public class Game {
 	 */
 	public void initializeGameS() {
 		this.credit = new Credit(mode.StartingCredit());
-		this.initialCredit = new Credit(mode.StartingCredit());
 		this.deck = (((SimulationMode) mode).createDeck(this.deck));
 		this.stats = new Statistics();
 		this.plays = (((SimulationMode) mode).GetPlays());
@@ -120,7 +116,7 @@ public class Game {
 		switch (command.charAt(0)) {
 			case 'b':
 				if (!this.hasBet) {
-					if (this.simBet != 0) {
+					if (this.simBet == 0) {
 						this.bet = ((SimulationMode) mode).BetValue();
 						
 					}else if (command.length() != 1) {
@@ -137,6 +133,7 @@ public class Game {
 					
 					System.out.printf("player is betting %s\n", this.bet);
 					this.hasBet = true;
+					this.credit.Add(-bet);
 					this.stats.AddBet(bet);
 					break;
 					
@@ -157,6 +154,7 @@ public class Game {
 						cards.add(deck.drawCard());
 					}
 					this.hand = new Hand(cards);
+					this.mode.SetHand(hand);
 					this.advice = new Advice(this.hand);
 					this.state = 1;
 					System.out.printf("player's hand %s\n", this.hand.toString());
@@ -193,7 +191,7 @@ public class Game {
 				System.out.printf("---------------------------\n");	
 				System.out.printf("Total                    %d\n", this.stats.TotalPlays());	
 				System.out.printf("---------------------------\n");
-				System.out.printf("Credit             %d(%f%%)\n", this.credit.GetValue(), (float)(this.credit.GetValue()-this.initialCredit.GetValue())/this.stats.GetBets()*100);
+				System.out.printf("Credit             %d(%f%%)\n", this.credit.GetValue(), (float)(this.stats.GetGains())/this.stats.GetBets()*100);
 				break;
 			default:
 				System.out.printf("Invalid command\n");
@@ -232,7 +230,10 @@ public class Game {
 					}
 				}
 				System.out.printf("player's hand %s\n", this.hand.toString());
+				int gain = this.credit.GetValue();
 				this.credit.Add(HandCheck(this.hand, this.bet));
+				gain = this.credit.GetValue() - gain;
+				this.stats.AddGain(gain);
 				System.out.printf("%d\n\n", this.credit.GetValue());
 				this.deck = this.mode.createDeck(this.deck);
 				this.state = 0;
@@ -260,7 +261,7 @@ public class Game {
 				System.out.printf("---------------------------\n");	
 				System.out.printf("Total                    %d\n", this.stats.TotalPlays());	
 				System.out.printf("---------------------------\n");
-				System.out.printf("Credit             %d(%f%%)\n", this.credit.GetValue(), (float)(this.credit.GetValue()-this.initialCredit.GetValue())/this.stats.GetBets()*100);
+				System.out.printf("Credit             %d(%f%%)\n", this.credit.GetValue(), (float)(this.stats.GetGains())/this.stats.GetBets()*100);
 				break;	
 				
 			default:
@@ -298,6 +299,10 @@ public class Game {
 		}
 		this.DoCommandEnd(command);
 		this.hasBet = false;
+		if (this.Getnumberplays() <= 0) {
+			this.DoCommandEnd("s");
+			this.commands = null;
+		}
 		return;
 
 	}
@@ -313,7 +318,7 @@ public class Game {
 			case 12:
 				this.stats.AddStat(9);
 				System.out.printf("player wins with a ROYAL FLUSH and his credit is ");
-				if (bet != 5) {
+				if (bet == 5) {
 					return 4000;
 				}else {
 					return 250*bet;

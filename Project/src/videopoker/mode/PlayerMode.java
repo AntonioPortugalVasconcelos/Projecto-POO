@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import videopoker.game.Card;
 import videopoker.game.Deck;
+import videopoker.game.Hand;
 import videopoker.game.Rank;
 import videopoker.game.Suit;
 import videopoker.interfaces.GameMode;
@@ -56,5 +57,9 @@ public class PlayerMode implements GameMode{
         deck.Shuffle();
         return deck;
     }
+	
+	public void SetHand(Hand hand) {
+		
+	}
 
 }

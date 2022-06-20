@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 
 import videopoker.game.Deck;
+import videopoker.game.Hand;
 import videopoker.interfaces.GameMode;
 
 public class DebugMode implements GameMode {
@@ -99,5 +100,9 @@ public class DebugMode implements GameMode {
 		return deck;
 		
     }
+	
+	public void SetHand(Hand hand) {
+		
+	}
 
 }

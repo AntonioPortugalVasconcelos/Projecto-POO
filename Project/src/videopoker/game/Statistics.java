@@ -12,6 +12,7 @@ public class Statistics {
 	private int RoyalFlush = 0;
 	private int Other = 0;
 	private int SumOfBets = 0;
+	private int SumOfGains = 0;
 	
 	public void AddStat(int stat) {
 		switch (stat) {
@@ -89,6 +90,14 @@ public class Statistics {
 	
 	public int GetBets() {
 		return SumOfBets;
+	}
+	
+	public void AddGain(int gain) {
+		this.SumOfGains += gain;
+	}
+	
+	public int GetGains() {
+		return SumOfGains;
 	}
 
 }

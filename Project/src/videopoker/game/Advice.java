@@ -16,7 +16,8 @@ public class Advice {
 		String Numbers;
 		Numbers = getAdvice();
 		this.hand.returnHand();
-		if (Numbers.equals(null)) {
+		System.out.printf("\n");
+		if (Numbers == null) {
 			return Hold;
 		}
 		Hold = Hold + " " + Numbers;
