@@ -2,6 +2,7 @@ package videopoker.main;
 
 import videopoker.game.Game;
 import videopoker.mode.DebugMode;
+import videopoker.mode.PlayerMode;
 import videopoker.mode.SimulationMode;
 
 
@@ -19,6 +20,10 @@ public class VideoPokerMain {
         case "-d":
             game = new Game(new DebugMode(args));
     		game.initializeGameD();
+            break;
+        case "-p":
+            game = new Game(new PlayerMode(args));
+    		game.initializeGameP();
             break;
         case "-s":
             game = new Game(new SimulationMode(args));

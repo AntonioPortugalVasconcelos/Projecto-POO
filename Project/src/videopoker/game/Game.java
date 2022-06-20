@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import videopoker.interfaces.GameMode;
 import videopoker.mode.DebugMode;
+import videopoker.mode.PlayerMode;
 import videopoker.mode.SimulationMode;
 
 public class Game {
@@ -17,6 +18,7 @@ public class Game {
 	private String commands = null;
 	private String command;
 	private int plays = 0;
+	private int simBet = 0;
 	private int bet;
 	private int state;
 	private boolean hasBet = false;
@@ -33,7 +35,7 @@ public class Game {
 	}
 	
 	/**
-	 * Iniatialize game in DebugMode
+	 * Initialize game in DebugMode
 	 * 
 	 */
 	public void initializeGameD() {
@@ -46,7 +48,20 @@ public class Game {
 		
 	}
 	/**
-	 * Iniatialize game in SimulationMode
+	 * Initialize game in PlayerMode
+	 */
+	public void initializeGameP() {
+		this.credit = new Credit(mode.StartingCredit());
+		this.initialCredit = new Credit(mode.StartingCredit());
+		this.deck = (((PlayerMode) mode).createDeck(this.deck));
+		this.stats = new Statistics();
+		this.plays = (((PlayerMode) mode).GetPlays());
+		this.state = 0;
+		
+	}
+
+	/**
+	 * Initialize game in SimulationMode
 	 */
 	public void initializeGameS() {
 		this.credit = new Credit(mode.StartingCredit());
@@ -54,7 +69,8 @@ public class Game {
 		this.deck = (((SimulationMode) mode).createDeck(this.deck));
 		this.stats = new Statistics();
 		this.plays = (((SimulationMode) mode).GetPlays());
-		this.bet = (((SimulationMode) mode).BetValue());
+		this.commands = this.command;
+		this.simBet = 0;
 		this.state = 0;
 		
 	}
@@ -104,42 +120,27 @@ public class Game {
 		switch (command.charAt(0)) {
 			case 'b':
 				if (!this.hasBet) {
-					if (commands == null) {
-						if (this.credit.Add(-bet)) {
-							this.credit.Add(bet);
-							System.out.printf("b: illegal amount \n");
-							break;
-						}
+					if (this.simBet != 0) {
+						this.bet = ((SimulationMode) mode).BetValue();
 						
-					}
-					else if (command.length() != 1) {
+					}else if (command.length() != 1) {
 						this.bet = Integer.valueOf(command.split(" ")[1]);
 						if (this.bet < 1 || this.bet > 5) {
 							System.out.printf("b: illegal amount \n");
 							break;
 							
 						}
-						if (this.credit.Add(-bet)) {
-							this.credit.Add(bet);
-							System.out.printf("b: illegal amount \n");
-							break;
-						}
 						
 					}else {
 						this.bet = 5;
-						if (this.credit.Add(-bet)) {
-							this.credit.Add(bet);
-							System.out.printf("b: illegal amount %s\n", this.bet);
-							break;
-						}
-						
 					}
+					
 					System.out.printf("player is betting %s\n", this.bet);
 					this.hasBet = true;
 					this.stats.AddBet(bet);
 					break;
 					
-				} else {
+				}else {
 					System.out.printf("b: player has already bet\n");
 					break;
 					

@@ -1,58 +1,44 @@
 package videopoker.mode;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import videopoker.game.Advice;
 import videopoker.game.Card;
 import videopoker.game.Deck;
-import videopoker.game.Hand;
 import videopoker.game.Rank;
 import videopoker.game.Suit;
 import videopoker.interfaces.GameMode;
 
-public class SimulationMode implements GameMode {
+public class PlayerMode implements GameMode{
 	
 	private String[] args;
-	private Advice advice;
-	private Hand hand;
 
+	@Override
 	public int StartingCredit() {
 		return Integer.valueOf(args[1]);
 	}
-
-	public int BetValue() {
+	
+	public int GetPlays() {
 		return Integer.valueOf(args[2]);
 	}
 	
-	public int GetPlays() {
-		return Integer.valueOf(args[3]);
-	}
-	
-	public String[] NextCommand(String prevCommand) {
-		this.advice = new Advice(hand);
-		if(prevCommand.equals("") || prevCommand.charAt(0) == 'h') {
-	    	String[] returnStrings = new String[]{"b", null};
+	public String[] NextCommand(String commands) {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		
+	    try {
+	    	String[] returnStrings = new String[]{reader.readLine(), null};
 	    	return returnStrings;
-	    	
-		} else if(prevCommand.equals("b")) {
-	    	String[] returnStrings = new String[]{"d", null};
-	    	return returnStrings;
-			
-		}else {
-	    	String[] returnStrings = new String[]{advice.getAdv(), null};
-	    	return returnStrings;
-			
-			
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public SimulationMode(String[] arguments) {
+	public PlayerMode(String[] arguments) {
 		this.args = arguments;
 		
-	}
-	
-	public void SetHand(Hand hand) {
-		this.hand = hand;
 	}
 
     public Deck createDeck(Deck legacyDeck) {
