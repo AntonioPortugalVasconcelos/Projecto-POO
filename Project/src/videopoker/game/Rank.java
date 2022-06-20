@@ -1,12 +1,16 @@
 package videopoker.game;
-
+/**
+ * 
+ * @author António Vasconcelos and António Falacho
+ *
+ */
 public class Rank {
 	private char val;
 	private char cardNumb[] = {'2','3','4','5','6','7','8','9','T','J','Q','K','A'};
 	 
 	/**
 	 * Constructor for Rank class
-	 * @param val
+	 * @param val rank value
 	 */
 	 public Rank(char val) {
 	        this.val = val;
@@ -26,8 +30,8 @@ public class Rank {
 	 }
 	 /**
 	  * Gets the rank of the card
-	  * @return
-	  */
+	  * @return the value of the rank
+	  */ 
 	 public char GetRank() {
 		 return this.val;
 	 }

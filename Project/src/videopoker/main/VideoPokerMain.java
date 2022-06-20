@@ -5,9 +5,17 @@ import videopoker.mode.DebugMode;
 import videopoker.mode.PlayerMode;
 import videopoker.mode.SimulationMode;
 
-
+/**
+ * 
+ * @author  António Vasconcelos and António Falacho
+ *
+ */
 public class VideoPokerMain {
 
+	/**
+	 * the main function
+	 * @param args input arguments
+	 */
 	public static void main(String[] args) {
 
 		Game game = null;

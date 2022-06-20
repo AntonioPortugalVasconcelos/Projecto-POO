@@ -6,7 +6,11 @@ import videopoker.interfaces.GameMode;
 import videopoker.mode.DebugMode;
 import videopoker.mode.PlayerMode;
 import videopoker.mode.SimulationMode;
-
+/**
+ * 
+ * @author António Vasconcelos and António Falacho
+ *
+ */
 public class Game {
 	private Hand hand;
 	private Deck deck;
@@ -25,7 +29,7 @@ public class Game {
 	/**
 	 *Selects the mode we're in. either Debug or simulation mode
 	 *
-	 * @param mode
+	 * @param mode game mode for instanced game
 	 */
 	public Game(GameMode mode) {
 		this.mode = mode;

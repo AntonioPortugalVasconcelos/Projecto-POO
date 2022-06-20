@@ -1,16 +1,26 @@
 package videopoker.game;
 
 import java.util.ArrayList;
-
+/**
+ * 
+ * @author António Vasconcelos and António Falacho
+ *
+ */
 public class Advice {
 	private Hand hand;
 	
-
+	/**
+	 * Constructor of Advice class
+	 * @param hand to analyze
+	 */
 	public Advice(Hand hand) {
 		super();
 		this.hand = hand;	
 	}
-	
+	/**
+	 * Call getAdvice and returns a string with what cards to hold
+	 * @return returns a command string with cards to hold
+	 */
 	public String getAdv() {
 		String Hold = "h";
 		String Numbers;
@@ -23,7 +33,10 @@ public class Advice {
 		Hold = Hold + " " + Numbers;
 		return Hold;
 	}
-	
+	/**
+	 * Analysis the hand and understanding what cards are best to win
+	 * @return string with cards to hold
+	 */
 	public String getAdvice() {
 		int i;	
 		String DeckList;

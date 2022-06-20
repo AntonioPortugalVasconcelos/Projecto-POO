@@ -1,7 +1,11 @@
 package videopoker.game;
 
 import java.util.*;
-
+/**
+ * 
+ * @author António Vasconcelos and António Falacho
+ *
+ */
 public class Hand {
 	private ArrayList<Card> hand;
 	private ArrayList<Card> hand_original;
@@ -10,7 +14,7 @@ public class Hand {
 
 	/**
 	 * Constructor for Hand class
-	 * @param hand
+	 * @param hand arrayList of hand
 	 */
 	public Hand(ArrayList<Card> hand) {
 		super();
@@ -62,7 +66,7 @@ public class Hand {
 	}
 	/**
 	 * Returns the attribute hand
-	 * @return
+	 * @return hand to be returned
 	 */
 	public ArrayList<Card> getHand(){
 		return this.hand;
@@ -102,7 +106,7 @@ public class Hand {
 	/**
 	 * Returns the cards of the hand to discard
 	 * @param hold(string with the cards to hold)
-	 * @return
+	 * @return string of cards in hand to hold
 	 */
 	public char[] HoldHand(String hold) {
 		String[] cardsHold = hold.split(" ");
@@ -170,7 +174,7 @@ public class Hand {
 	}
 	/**
 	 * Checks for a pair in the hand
-	 * @return
+	 * @return boolean for check
 	 */
 	public boolean checkPair() {
 		for(int i = 0; i < 4; i++){
@@ -183,7 +187,7 @@ public class Hand {
 	}
 	/**
 	 * Checks for a high pair in the hand
-	 * @return
+	 * @return boolean for check
 	 */
 	private boolean checkHighPair() {
 		for(int i = 0; i < 4; i++){
@@ -199,7 +203,7 @@ public class Hand {
 	}
 	/**
 	 * Checks for two pairs in the hand
-	 * @return
+	 * @return boolean for check
 	 */
 	private boolean check2Pair() {
 		boolean flag = false;
@@ -221,7 +225,7 @@ public class Hand {
 	}
 	/**
 	 * Checks for a three of a kind in the hand
-	 * @return
+	 * @return boolean check
 	 */
 	private boolean check3Kind() {
 		for(int i = 0; i < 3; i++){
@@ -234,7 +238,7 @@ public class Hand {
 	}
 	/**
 	 * Checks for a straight in the hand
-	 * @return
+	 * @return boolean check
 	 */
 	private boolean checkStraight() {
 		int i = 0;
@@ -255,6 +259,10 @@ public class Hand {
 			}
 		return false;
 	}
+	/**
+	 * Checks for a flush in the hand
+	 * @return boolean check
+	 */
 	private boolean checkFlush() {
 		int i = 0;	
 		if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
@@ -266,6 +274,10 @@ public class Hand {
 		}
 		return false;
 	}
+	/**
+	 * Checks for a full house in the hand
+	 * @return boolean check
+	 */
 	private boolean checkFullHouse() {
 		if(check3Kind()) {
 			for(int i = 0; i < 4; i++){
@@ -280,7 +292,7 @@ public class Hand {
 	}
 	/**
 	 * Checks for a 4 of a kind of Aces in the hand
-	 * @return
+	 * @return boolean check
 	 */
 	private boolean check4KindA() {
 		int i = 1;
@@ -293,7 +305,7 @@ public class Hand {
 	}
 	/**
 	 * Checks for a 4 of a kind between 2 and 4 in the hand
-	 * @return
+	 * @return boolean check
 	 */
 	private boolean check4Kind24() {
 		int i = 0;
@@ -312,7 +324,7 @@ public class Hand {
 	}
 	/**
 	 * Checks for a 4 of a kind between 4 and king in the hand
-	 * @return
+	 * @return boolean check
 	 */
 	private boolean check4Kind5K() {		
 		for(int i = 0; i < 2; i++){
@@ -327,9 +339,17 @@ public class Hand {
 		
 		return false;
 	}
+	/**
+	 * Checks for a straight flush in the hand
+	 * @return boolean check
+	 */
 	private boolean checkStraightFlush() {
 		return checkStraight() && checkFlush();
 	}
+	/**
+	 * Checks for a royal flush in the hand
+	 * @return boolean check
+	 */
 	private boolean checkRoyalFlush() {
 		return checkStraightFlush() && this.hand.get(4).CardRank() == 'A';
 	}
@@ -337,7 +357,10 @@ public class Hand {
 	//				   //
 	// ADVICE FUNCTIONS//
 	//				   //
-	
+	/**
+	 * Checks for 4 cards to a royal flush
+	 * @return boolean check
+	 */
 	public boolean checkAlmostRoyalFlush() {
 		
 		this.SortHandSuit();
@@ -359,7 +382,10 @@ public class Hand {
 		return false;
 		
 	}
-	
+	/**
+	 * Checks for 4 cards to a flush in a hand
+	 * @return boolean check
+	 */
 	public boolean checkAlmostFlush(){
 		this.SortHandSuit();
 		for(int i = 0; i < 2; i++) {
@@ -373,7 +399,10 @@ public class Hand {
 		this.SortHand();
 		return false;
 	}
-	
+	/**
+	 * Checks for 4 cards to a straight in a hand
+	 * @return boolean check
+	 */
 	public boolean checkAlmostStraight(){
 		for(int i = 0; i < 2; i++) {
 			if (this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
@@ -386,7 +415,10 @@ public class Hand {
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks for 4 cards to a straight flush in a hand
+	 * @return boolean check
+	 */
 	public boolean checkAlmostStraightFlush(){
 		int i = 0;
 
@@ -442,7 +474,10 @@ public class Hand {
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks for 3 cards to a royal flush in a hand
+	 * @return boolean check
+	 */
 	public boolean check3RoyalFlush(){
 		this.SortHandSuit();
 		for(int i = 0; i < 3; i++) {
@@ -459,7 +494,10 @@ public class Hand {
 		this.SortHand();
 		return false;
 	}
-	
+	/**
+	 * Checks for 3 Aces in a hand
+	 * @return boolean check
+	 */
 	public boolean check3Aces() {
 		if(check3Kind()) {
 			if(this.hand.get(this.index).CardRank() == 'A') {
@@ -468,7 +506,10 @@ public class Hand {
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks for an AKQJ unsuited in a hand
+	 * @return boolean check
+	 */
 	public boolean checkAKQJ() {
 		int i = 1;
 		if(this.hand.get(i).CardRank() == 'J' && this.hand.get(i+1).CardRank() == 'Q' &&
@@ -477,7 +518,10 @@ public class Hand {
 		}
 		return false;	
 	}
-	
+	/**
+	 * Checks for 3 cards to a straight flush in a hand type 1
+	 * @return boolean check
+	 */
 	public boolean checkStraight3FlushT1() {
 		int f = 0;
 		int i = 0;
@@ -532,7 +576,10 @@ public class Hand {
 		this.SortHand();
 		return false;
 	}
-	
+	/**
+	 * Checks for 4 cards to an inside straight in a hand with 3 high cards
+	 * @return boolean check
+	 */
 	public boolean check4InStrainght3High() {
 		int i = 0;
 		if(this.hand.get(2).CardValue() > 8 &&
@@ -572,7 +619,10 @@ public class Hand {
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks for 3 cards to a flush in a hand with 2 high cards
+	 * @return boolean check
+	 */
 	public boolean check3Flush2High() {
 		this.SortHandSuit();
 		for (int i = 0; i < 3; i++) {
@@ -589,7 +639,10 @@ public class Hand {
 		this.SortHand();
 		return false;
 	}
-	
+	/**
+	 * Checks for 2 suited high cards in a hand
+	 * @return boolean check
+	 */
 	public boolean check2SuitHigh() {
 		this.SortHandSuit();
 		for (int i = 0; i < 4; i++) {
@@ -603,7 +656,10 @@ public class Hand {
 		this.SortHand();
 		return false;
 	}
-	
+	/**
+	 * Checks for 4 cards to an inside straight in a hand with 2 high cards
+	 * @return boolean check
+	 */
 	public boolean check4InStrainght2High() {
 		int i = 0;
 		if(this.hand.get(3).CardValue() > 8 &&
@@ -636,7 +692,10 @@ public class Hand {
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks for 3 cards to a straight flush in a hand type 2
+	 * @return boolean check
+	 */
 	public boolean checkStraight3FlushT2() {
 		int f = 0;
 		int i = 0;
@@ -681,7 +740,10 @@ public class Hand {
 		this.SortHand();
 		return false;
 	}
-	
+	/**
+	 * Checks for 4 cards to an inside straight in a hand with 1 high card
+	 * @return boolean check
+	 */
 	public boolean check4InStrainght1High() {
 		int i = 0;
 		if(this.hand.get(2).CardValue() > 8) {
@@ -713,7 +775,10 @@ public class Hand {
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks for a Queen with a Jack suited in a hand
+	 * @return boolean check
+	 */
 	public boolean checkQJSuit() {
 		boolean flag = false;
 		for(int i = 0; i < 5; i++) {
@@ -734,7 +799,10 @@ public class Hand {
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks for a King or a Queen or a Jack in a hand
+	 * @return boolean check
+	 */
 	public boolean checkKQJ() {
 		int i = 2;
 		if(this.hand.get(i).CardRank() == 'J' && this.hand.get(i+1).CardRank() == 'Q' &&
@@ -743,7 +811,10 @@ public class Hand {
 		}
 		return false;	
 	}
-	
+	/**
+	 * Checks for a Jack and ten of the same suit in a hand
+	 * @return boolean check
+	 */
 	public boolean checkJTSuit() {
 		boolean flag = false;
 		for(int i = 0; i < 5; i++) {
@@ -764,7 +835,10 @@ public class Hand {
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks for a Queen and a Jack in a hand 
+	 * @return boolean check
+	 */
 	public boolean checkQJ() {
 		boolean flag = false;
 		for(int i = 0; i < 5; i++) {
@@ -783,7 +857,10 @@ public class Hand {
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks for 4 cards to an inside flush in a hand with 1 high card
+	 * @return boolean check
+	 */
 	public boolean check3Flush1High() {
 		this.SortHandSuit();
 		for (int i = 0; i < 3; i++) {
@@ -800,7 +877,10 @@ public class Hand {
 		this.SortHand();
 		return false;
 	}
-	
+	/**
+	 * Checks for a Queen and a Ten suited in a hand 
+	 * @return boolean check
+	 */
 	public boolean checkQTSuit() {
 		boolean flag = false;
 		for(int i = 0; i < 5; i++) {
@@ -821,7 +901,10 @@ public class Hand {
 		}
 		return false;
 	}	
-	
+	/**
+	 * Checks for 3 cards to a straight flush in a hand type 3
+	 * @return boolean check
+	 */
 	public boolean checkStraight3FlushT3() {
 		int i = 0;
 		this.SortHandSuit();
@@ -854,7 +937,10 @@ public class Hand {
 		this.SortHand();
 		return false;
 	}
-	
+	/**
+	 * Checks for a King and Queen or King Jack in a hand 
+	 * @return boolean check
+	 */
 	public boolean checkKjKq() {
 		boolean flag = false;
 		for(int i = 0; i < 5; i++) {
@@ -873,7 +959,10 @@ public class Hand {
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks for an Ace in a hand 
+	 * @return boolean check
+	 */
 	public boolean CheckAce() {
 		int i = 4;
 		if(this.hand.get(i).CardRank() == 'A') {
@@ -882,7 +971,10 @@ public class Hand {
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks for a King and a Ten in a hand 
+	 * @return boolean check
+	 */
 	public boolean checkTK() {
 		boolean flag = false;
 		for(int i = 0; i < 5; i++) {
@@ -903,7 +995,10 @@ public class Hand {
 		}
 		return false;
 	}	
-
+	/**
+	 * Checks for a King or Queen or a Jack in a hand 
+	 * @return boolean check
+	 */
 	public boolean checkJoQoK() {
 		for(int i = 0; i < 5; i++) {
 			if (this.hand.get(i).CardRank() == 'J' || this.hand.get(i).CardRank() == 'Q' ||
@@ -914,7 +1009,10 @@ public class Hand {
 		}
 		return false;
 	}
-
+	/**
+	 * Checks for 4 cards to an inside straight with no high cards in a hand 
+	 * @return boolean check
+	 */
 	public boolean InsideStraightLow() {
 		int i = 0;
 		for (i = 0; i < 2; i++) {
@@ -943,7 +1041,10 @@ public class Hand {
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks for 3 cards to a flush in a hand 
+	 * @return boolean check
+	 */
 	public boolean check3Flush() {
 		this.SortHandSuit();
 		for (int i = 0; i < 3; i++) {
@@ -962,7 +1063,10 @@ public class Hand {
 	
 	
 	
-	
+	/**
+	 * Returns a string  with the cards to hold (searching for the same values in the orignal hand) 
+	 * @return cards to hold
+	 */
 	public String searchSameKind() {
 		String Aces = null;
 		boolean flag = false;
@@ -979,7 +1083,10 @@ public class Hand {
 		}	
 		return Aces;
 	}
-	
+	/**
+	 * Returns a string  with the cards to hold (searching for two pairs or two different cards) 
+	 * @return cards to hold
+	 */
 	public String search2Pair() {
 		String Aces = null;
 		boolean flag = false;
@@ -997,7 +1104,10 @@ public class Hand {
 		}
 		return Aces;
 	}
-	
+	/**
+	 * Returns a string  with the cards to hold (searching for the same suits in the orignal hand) 
+	 * @return cards to hold
+	 */
 	public String searchSameSuit() {
 		String Aces = null;
 		boolean flag = false;
@@ -1014,7 +1124,10 @@ public class Hand {
 		}	
 		return Aces;
 	}
-	
+	/**
+	 * Returns a string  with the cards to hold (searching for 4 cards to an outside straight in the orignal hand) 
+	 * @return cards to hold
+	 */
 	public String search4Straight() {
 		String Aces = null;
 		boolean flag = false;
@@ -1034,7 +1147,10 @@ public class Hand {
 		}	
 		return Aces;
 	}
-	
+	/**
+	 * Returns a string  with the cards to hold (searching for a high card in the original hand) 
+	 * @return cards to hold
+	 */
 	public String searchAKQJ() {
 		String Aces = null;
 		boolean flag = false;
@@ -1052,7 +1168,10 @@ public class Hand {
 		}
 		return Aces;
 	}
-	
+	/**
+	 * Returns a string  with the cards to hold (searching for 4 cards to a straight flush in the original hand) 
+	 * @return cards to hold
+	 */
 	public String search4StraightFlush() {
 		String Aces = null;
 		boolean flag = false;
@@ -1143,7 +1262,10 @@ public class Hand {
 		}
 		return Aces;
 	}
-	
+	/**
+	 * Returns a string  with the cards to hold (searching for 4 cards to a royal flush in the original hand) 
+	 * @return cards to hold
+	 */
 	public String searchAlmostRoyalFlush() {
 		String Aces = null;
 		boolean flag = false;
@@ -1168,7 +1290,10 @@ public class Hand {
 		}
 		return Aces;
 	}
-	
+	/**
+	 * Returns a string  with the cards to hold (searching for 3 cards to a royal flush in the original hand) 
+	 * @return cards to hold
+	 */
 	public String search3RoyalFlush() {
 		String Aces = null;
 		boolean flag = false;
@@ -1188,7 +1313,10 @@ public class Hand {
 		}
 		return Aces;
 	}
-	
+	/**
+	 * Returns a string  with the cards to hold (searching for 4 cards to a flush in the original hand) 
+	 * @return cards to hold
+	 */
 	public String search3Flush() {
 		String Aces = null;
 		boolean flag = false;
@@ -1206,7 +1334,10 @@ public class Hand {
 		}
 		return Aces;
 	}
-
+	/**
+	 * Returns a string  with the cards to hold (searching for 4 cards to a straight in the original hand) 
+	 * @return cards to hold
+	 */
 	public String searchAlmostStraight() {
 		String Aces = null;
 		boolean flag = false;
@@ -1231,7 +1362,10 @@ public class Hand {
 		}
 		return Aces;
 	}
-	
+	/**
+	 * Returns a string  with the cards to hold (searching for 3 cards to a straight flush in the original hand) 
+	 * @return cards to hold
+	 */
 	public String searchStraight3Flush() {
 		String Aces = null;
 		boolean flag = false;
@@ -1249,7 +1383,10 @@ public class Hand {
 		}
 		return Aces;
 	}
-
+	/**
+	 * Returns a string  with the cards to hold (searching for 2 High cards in the original hand) 
+	 * @return cards to hold
+	 */
 	public String search2HighSuit() {
 		String Aces = null;
 		boolean flag = false;

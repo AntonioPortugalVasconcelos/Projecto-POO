@@ -1,5 +1,9 @@
 package videopoker.game;
-
+/**
+ * 
+ * @author  António Vasconcelos and António Falacho
+ *
+ */
 public class Statistics {
 	private int JackorBetter = 0;
 	private int TwoPair = 0;
@@ -13,7 +17,10 @@ public class Statistics {
 	private int Other = 0;
 	private int SumOfBets = 0;
 	private int SumOfGains = 0;
-	
+	/**
+	 * Receives the result of the last hand and adds it to the statistics
+	 * @param stat(last result)
+	 */
 	public void AddStat(int stat) {
 		switch (stat) {
 			case 1:
@@ -50,7 +57,11 @@ public class Statistics {
 		}
 		
 	}
-	
+	/**
+	 * Returns the statistics of each hand
+	 * @param stat(Which hand will be returned)
+	 * @return value for requested statistic
+	 */
 	public int GetStat(String stat) {
 		switch (stat) {
 			case "1":
@@ -78,24 +89,39 @@ public class Statistics {
 		return -1;
 		
 	}
-	
+	/**
+	 * Returns the total of plays made
+	 * @return total number of plays
+	 */
 	public int TotalPlays() {
 		return this.JackorBetter + this.TwoPair + this.ThreeKind + this.Straight + this.Flush +
 				this.FullHouse + this.FourKind + this.StraightFlush + this.RoyalFlush + this.Other;
 	}
-	
+	/**
+	 * Adds another bet made
+	 * @param bet value to add to total bets
+	 */
 	public void AddBet(int bet) {
 		this.SumOfBets += bet;
 	}
-	
+	/**
+	 * gets the sum of all bets
+	 * @return total sum of bets
+	 */
 	public int GetBets() {
 		return SumOfBets;
 	}
-	
+	/**
+	 * Adds another gain made
+	 * @param gain value to add to total gain
+	 */
 	public void AddGain(int gain) {
 		this.SumOfGains += gain;
 	}
-	
+	/**
+	 * gets the sum of all gains
+	 * @return total sum of gains
+	 */
 	public int GetGains() {
 		return SumOfGains;
 	}

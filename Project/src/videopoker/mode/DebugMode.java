@@ -8,22 +8,36 @@ import java.util.Arrays;
 import videopoker.game.Deck;
 import videopoker.game.Hand;
 import videopoker.interfaces.GameMode;
-
+/**
+ * 
+ * @author António Vasconcelos and António Falacho
+ *
+ */
 public class DebugMode implements GameMode {
     private String[] args;
     
+    /**
+     * constructor for debug mode
+     * @param arguments input arguments
+     */
     public DebugMode(String[] arguments) {
     	this.args = arguments;
     	
     	
     }
-    
+    /**
+     * Gets the initial credit from commands
+     * @return integer value of initial credit
+     */
     @Override
     public int StartingCredit() {
     	return Integer.valueOf(args[1]);
     	
     }
-    
+    /**
+     * reads the cmd files (gets the commands of the game)
+     * @return string of all commands for this mode
+     */
     public String getCommands() {
     	try {
 			return Files.readString(Path.of("..\\TESTS\\" + this.args[2] + ".txt"));
@@ -33,7 +47,9 @@ public class DebugMode implements GameMode {
 		return null;
     			
     }
-    
+    /**
+     * Gets the next command of the game
+     */
     public String[] NextCommand(String commands) {
     	String[] splitCommands = commands.split(" ");
     	String command = null;
@@ -75,7 +91,10 @@ public class DebugMode implements GameMode {
 		}
 		
     }
-    
+    /**
+     * Gets the cards for the deck from the card files
+     * @return string of deck from file
+     */
     public String GetDeck() {
     	try {
 			return Files.readString(Path.of("..\\TESTS\\" + this.args[3] + ".txt"));
@@ -85,7 +104,11 @@ public class DebugMode implements GameMode {
 		return null;
     			
     }
-    
+    /**
+     * Verifies if a string is or isn´t a number
+     * @param str
+     * @return
+     */
     private boolean isNumeric(String str) { 
 	  try {  
 	    Double.parseDouble(str);  
@@ -94,13 +117,17 @@ public class DebugMode implements GameMode {
 	    return false;  
 	  }  
 	}
-
+    /**
+     * Creates the deck from the cards the function getDeck pulled from txt files
+     */
     @Override
 	public Deck createDeck(Deck deck) {
 		return deck;
 		
     }
-	
+	/**
+	 * Legacy code
+	 */
 	public void SetHand(Hand hand) {
 		
 	}
