@@ -21,12 +21,21 @@ public class Game {
 	private int state;
 	private boolean hasBet = false;
 	
+	/**
+	 *Selects the mode we're in. either Debug or simulation mode
+	 *
+	 * @param mode
+	 */
 	public Game(GameMode mode) {
 		this.mode = mode;
 		
 		
 	}
 	
+	/**
+	 * Iniatialize game in DebugMode
+	 * 
+	 */
 	public void initializeGameD() {
 		this.credit = new Credit(mode.StartingCredit());
 		this.initialCredit = new Credit(mode.StartingCredit());
@@ -36,7 +45,9 @@ public class Game {
 		this.state = 0;
 		
 	}
-
+	/**
+	 * Iniatialize game in SimulationMode
+	 */
 	public void initializeGameS() {
 		this.credit = new Credit(mode.StartingCredit());
 		this.initialCredit = new Credit(mode.StartingCredit());
@@ -47,7 +58,10 @@ public class Game {
 		this.state = 0;
 		
 	}
-	
+	/**
+	 * To get the command length
+	 * @return string length of the command string
+	 */
 	public int GetCommandLenght() {
 		if (this.commands == null) {
 			return 0;
@@ -55,17 +69,25 @@ public class Game {
 		return this.commands.length();
 		
 	}
-	
+	/**
+	 * Serves to know how many plays the game will run in Simulation Mode
+	 * @return number of plays
+	 */
 	public int Getnumberplays() {
 		return this.plays;
 		
 	}
-	
+	/**
+	 * Serves to return the phase/state of the game which are before or after deal
+	 * @return the state of the game
+	 */
 	public int Getstate() {
 		return this.state;
 		
 	}
-	
+	/**
+	 * Initialize the variables command & commands to the game
+	 */
 	private void GetCommands() {
 		String[] returnString = null;
 		returnString = mode.NextCommand(commands);
@@ -73,7 +95,10 @@ public class Game {
 		this.commands = returnString[1];
 		
 	}
-	
+	/**
+	 * In the first state(before deal), it gives the response for every command given
+	 * @param command(command given)
+	 */
 	private void DoCommandStart(String command) {
 		System.out.printf("-cmd %s\n", command);
 		switch (command.charAt(0)) {
@@ -167,7 +192,7 @@ public class Game {
 				System.out.printf("---------------------------\n");	
 				System.out.printf("Total                    %d\n", this.stats.TotalPlays());	
 				System.out.printf("---------------------------\n");
-				System.out.printf("Credit             %d(%f%%)\n", this.initialCredit.GetValue(), (float)(this.credit.GetValue()-this.credit.GetValue())/this.stats.GetBets()*100);
+				System.out.printf("Credit             %d(%f%%)\n", this.credit.GetValue(), (float)(this.credit.GetValue()-this.initialCredit.GetValue())/this.stats.GetBets()*100);
 				break;
 			default:
 				System.out.printf("Invalid command\n");
@@ -177,7 +202,10 @@ public class Game {
 		System.out.printf("\n");
 		
 	}
-	
+	/**
+	 * In the first state(after deal), it gives the response for every command given
+	 * @param command(command given)
+	 */
 	private void DoCommandEnd(String command) {
 		System.out.printf("-cmd %s\n", command);
 		switch (command.charAt(0)) {
@@ -210,7 +238,8 @@ public class Game {
 				break;
 				
 			case 'a':
-				this.advice.getAdvice();
+				this.advice.getAdv();
+				System.out.printf("\n");
 				break;
 				
 				
@@ -240,7 +269,9 @@ public class Game {
 		}
 		
 	}
-
+	/**
+	 * Call function for first phase of the game. Checks for errors in commands
+	 */
 	public void TurnStart() {
 		this.GetCommands();
 		if (command.equals("")) 
@@ -253,7 +284,9 @@ public class Game {
 		return;
 
 	}
-
+	/**
+	 * Call function for second and last phase of the game. Checks for errors in commands
+	 */
 	public void TurnEnd() {
 		this.GetCommands();
 		if (command.equals("")) 
@@ -267,7 +300,12 @@ public class Game {
 		return;
 
 	}
-	
+	/**
+	 * Checks the final result of the hand a gives the reward according to the result and the bet given
+	 * @param hand
+	 * @param bet
+	 * @return
+	 */
 	private int HandCheck(Hand hand, int bet) {
 		this.plays--;
 		switch (hand.handType()){

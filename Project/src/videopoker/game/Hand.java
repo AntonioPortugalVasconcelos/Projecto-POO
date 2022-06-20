@@ -8,31 +8,69 @@ public class Hand {
 	private int index;
 	private int index2;
 
+	/**
+	 * Constructor for Hand class
+	 * @param hand
+	 */
 	public Hand(ArrayList<Card> hand) {
 		super();
 		this.hand = hand;
-		this.hand_original = this.hand;
 		this.index = -1;
 		this.index2 = -1;
 	}
-	
+	/**
+	 * Sorts Hand by Value
+	 */
 	public void SortHand() {
 		Comparator<Card> handComparer = Comparator.comparing(Card::CardValue);
-		Collections.sort(hand, handComparer);
+		Collections.sort(this.hand, handComparer);
 	}
+	/**
+	 * Sorts hand by Suit and value inside of suit
+	 */
 	public void SortHandSuit() {
 		Comparator<Card> handComparer = Comparator.comparing(Card::CardSuit).thenComparing(Card::CardValue);
-		Collections.sort(hand, handComparer);
+		Collections.sort(this.hand, handComparer);
 	}
+	/**
+	 * Receives the original hand, which is a not sorted hand
+	 * @param hands(original hand)
+	 */
+	public void handOriginal(ArrayList<Card> hands) {
+		this.hand_original = hands;
+	}
+	/**
+	 * Returns the original hand, which is a not sorted hand
+	 */
+	public void returnHand() {
+		this.hand = this.hand_original;
+	}
+	/**
+	 * Add a Card "a" to the hand
+	 * @param a(card added to the hand)
+	 */
 	public void addHand(Card a) {
 		this.hand.add(a);
 	}
+	/**
+	 * Receives a card and a position and puts the card in the right position of the hand 
+	 * @param i(position of the hand)
+	 * @param a(card added to the hand)
+	 */
 	public void setHand(int i, Card a) {
 		this.hand.set(i, a);
 	}
+	/**
+	 * Returns the attribute hand
+	 * @return
+	 */
 	public ArrayList<Card> getHand(){
 		return this.hand;
 	}
+	/**
+	 * Returns the attribute hand_original in a string
+	 * @return string of the hand
+	 */
 	public String get2Hand(){
 		String strHand = null;
 		for(int i = 0; i < 5; i++) {
@@ -45,7 +83,10 @@ public class Hand {
 		}
 		return strHand;
 	}
-	
+	/**
+	 * Returns the attribute hand in a string
+	 * @return string of the hand
+	 */
 	public String toString() {
 		String strHand = null;
 		for(int i = 0; i < 5; i++) {
@@ -58,7 +99,11 @@ public class Hand {
 		}
 		return strHand;
 	}
-	
+	/**
+	 * Returns the cards of the hand to discard
+	 * @param hold(string with the cards to hold)
+	 * @return
+	 */
 	public char[] HoldHand(String hold) {
 		String[] cardsHold = hold.split(" ");
 		int i = -1;
@@ -72,7 +117,7 @@ public class Hand {
 			holdCard[i] = aux.charAt(0);
 			i++;
 		}
-		for (int j = 0; j <= i; j++) {
+		for (int j = 0; j < i; j++) {
 			for (int d = 0; d < 5; d++) {
 				if(holdCard[j] == discardCard[d]) {
 					discardCard[d] = '0';
@@ -81,7 +126,10 @@ public class Hand {
 		}
 		return discardCard;
 	}
-	
+	/**
+	 * Checks to see the result of the last hand
+	 * @return the value of the result codified
+	 */
 	public int handType() {
 		this.SortHand();
 		
@@ -120,7 +168,10 @@ public class Hand {
 	    }
 	    return 1;
 	}
-	
+	/**
+	 * Checks for a pair in the hand
+	 * @return
+	 */
 	public boolean checkPair() {
 		for(int i = 0; i < 4; i++){
 			if(this.hand.get(i).CardRank() == this.hand.get(i+1).CardRank()) {
@@ -130,7 +181,10 @@ public class Hand {
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks for a high pair in the hand
+	 * @return
+	 */
 	private boolean checkHighPair() {
 		for(int i = 0; i < 4; i++){
 			if(this.hand.get(i).CardRank() == 'J' || this.hand.get(i).CardRank() == 'Q'||
@@ -143,6 +197,10 @@ public class Hand {
 		}
 		return false;
 	}
+	/**
+	 * Checks for two pairs in the hand
+	 * @return
+	 */
 	private boolean check2Pair() {
 		boolean flag = false;
 		for(int i = 0; i < 4; i++){
@@ -161,6 +219,10 @@ public class Hand {
 		}
 		return false;
 	}
+	/**
+	 * Checks for a three of a kind in the hand
+	 * @return
+	 */
 	private boolean check3Kind() {
 		for(int i = 0; i < 3; i++){
 			if(this.hand.get(i).CardRank() == this.hand.get(i+1).CardRank() && this.hand.get(i).CardRank() == this.hand.get(i+2).CardRank()) {
@@ -170,6 +232,10 @@ public class Hand {
 		}
 		return false;
 	}
+	/**
+	 * Checks for a straight in the hand
+	 * @return
+	 */
 	private boolean checkStraight() {
 		int i = 0;
 		if (this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
@@ -212,6 +278,10 @@ public class Hand {
 			
 		return false;
 	}
+	/**
+	 * Checks for a 4 of a kind of Aces in the hand
+	 * @return
+	 */
 	private boolean check4KindA() {
 		int i = 1;
 		if(this.hand.get(i).CardRank() == 'A') {
@@ -221,6 +291,10 @@ public class Hand {
 		}
 		return false;
 	}
+	/**
+	 * Checks for a 4 of a kind between 2 and 4 in the hand
+	 * @return
+	 */
 	private boolean check4Kind24() {
 		int i = 0;
 		if(this.hand.get(i+2).CardRank() == '2' || this.hand.get(i+2).CardRank() == '3' || this.hand.get(i+2).CardRank() == '4') {
@@ -236,6 +310,10 @@ public class Hand {
 		}
 		return false;
 	}
+	/**
+	 * Checks for a 4 of a kind between 4 and king in the hand
+	 * @return
+	 */
 	private boolean check4Kind5K() {		
 		for(int i = 0; i < 2; i++){
 	        if(this.hand.get(i).CardRank() == this.hand.get(i+1).CardRank() &&
@@ -267,10 +345,10 @@ public class Hand {
 			if(this.hand.get(i).CardSuit() == this.hand.get(i+1).CardSuit() &&
 			this.hand.get(i).CardSuit()== this.hand.get(i+2).CardSuit() &&
 			this.hand.get(i).CardSuit()== this.hand.get(i+3).CardSuit()) {
-				if(this.hand.get(2).CardValue() > 7 &&
-				this.hand.get(2).CardValue() > 7 &&
-				this.hand.get(2).CardValue() > 7 &&
-				this.hand.get(2).CardValue() > 7) {
+				if(this.hand.get(i).CardValue() > 7 &&
+				this.hand.get(i+1).CardValue() > 7 &&
+				this.hand.get(i+2).CardValue() > 7 &&
+				this.hand.get(i+3).CardValue() > 7) {
 					this.index = i;
 					return true;
 				}
@@ -881,11 +959,11 @@ public class Hand {
 		for(int i = 0; i < 5; i++) {
 			if (this.hand_original.get(i).CardRank() == this.hand.get(this.index).CardRank()) {
 				if(!flag) {
-					Aces = String.valueOf(i);
+					Aces = String.valueOf(i+1);
 					flag = true;
 				}
 				else if(flag) {
-					Aces = Aces + " " + String.valueOf(i);
+					Aces = Aces + " " + String.valueOf(i+1);
 				}
 			}
 		}	
@@ -899,11 +977,11 @@ public class Hand {
 			if (this.hand_original.get(i).CardRank() == this.hand.get(this.index).CardRank() || 
 					this.hand_original.get(i).CardRank() == this.hand.get(this.index2).CardRank()) {
 				if(!flag) {
-					Aces = String.valueOf(i);
+					Aces = String.valueOf(i+1);
 					flag = true;
 				}
 				else if(flag) {
-					Aces = Aces + " " + String.valueOf(i);
+					Aces = Aces + " " + String.valueOf(i+1);
 				}
 			}
 		}
@@ -916,11 +994,11 @@ public class Hand {
 		for(int i = 0; i < 5; i++) {
 			if (this.hand_original.get(i).CardSuit() == this.hand.get(this.index).CardSuit()) {
 				if(!flag) {
-					Aces = String.valueOf(i);
+					Aces = String.valueOf(i+1);
 					flag = true;
 				}
 				else if(flag) {
-					Aces = Aces + " " + String.valueOf(i);
+					Aces = Aces + " " + String.valueOf(i+1);
 				}
 			}
 		}	
@@ -936,11 +1014,11 @@ public class Hand {
 					this.hand_original.get(i).CardValue() == this.hand.get(this.index).CardValue()+2 ||
 					this.hand_original.get(i).CardValue() == this.hand.get(this.index).CardValue()+3) {
 				if(!flag) {
-					Aces = String.valueOf(i);
+					Aces = String.valueOf(i+1);
 					flag = true;
 				}
 				else if(flag) {
-					Aces = Aces + " " + String.valueOf(i);
+					Aces = Aces + " " + String.valueOf(i+1);
 				}
 			}
 		}	
@@ -954,11 +1032,11 @@ public class Hand {
 			if (this.hand_original.get(i).CardRank() == 'J' || this.hand_original.get(i).CardRank() == 'Q' ||
 					this.hand_original.get(i).CardRank() == 'K' || this.hand_original.get(i).CardRank() == 'A') {
 				if(!flag) {
-					Aces = String.valueOf(i);
+					Aces = String.valueOf(i+1);
 					flag = true;
 				}
 				else if(flag) {
-					Aces = Aces + " " + String.valueOf(i);
+					Aces = Aces + " " + String.valueOf(i+1);
 				}
 			}
 		}
@@ -976,11 +1054,11 @@ public class Hand {
 				this.hand_original.get(i).CardRank() == this.hand.get(3).CardRank()) {
 					
 					if(!flag) {
-						Aces = String.valueOf(i);
+						Aces = String.valueOf(i+1);
 						flag = true;
 					}
 					else if(flag) {
-						Aces = Aces + " " + String.valueOf(i);
+						Aces = Aces + " " + String.valueOf(i+1);
 					}
 				}
 			}
@@ -993,11 +1071,11 @@ public class Hand {
 				this.hand_original.get(i).CardRank() == this.hand.get(4).CardRank()) {
 					
 					if(!flag) {
-						Aces = String.valueOf(i);
+						Aces = String.valueOf(i+1);
 						flag = true;
 					}
 					else if(flag) {
-						Aces = Aces + " " + String.valueOf(i);
+						Aces = Aces + " " + String.valueOf(i+1);
 					}
 				}
 			}
@@ -1010,11 +1088,11 @@ public class Hand {
 				this.hand_original.get(i).CardRank() == this.hand.get(4).CardRank()) {
 					
 					if(!flag) {
-						Aces = String.valueOf(i);
+						Aces = String.valueOf(i+1);
 						flag = true;
 					}
 					else if(flag) {
-						Aces = Aces + " " + String.valueOf(i);
+						Aces = Aces + " " + String.valueOf(i+1);
 					}
 				}
 			}
@@ -1027,11 +1105,11 @@ public class Hand {
 				this.hand_original.get(i).CardRank() == this.hand.get(4).CardRank()) {
 					
 					if(!flag) {
-						Aces = String.valueOf(i);
+						Aces = String.valueOf(i+1);
 						flag = true;
 					}
 					else if(flag) {
-						Aces = Aces + " " + String.valueOf(i);
+						Aces = Aces + " " + String.valueOf(i+1);
 					}
 				}
 			}
@@ -1044,11 +1122,11 @@ public class Hand {
 				this.hand_original.get(i).CardRank() == this.hand.get(4).CardRank()) {
 					
 					if(!flag) {
-						Aces = String.valueOf(i);
+						Aces = String.valueOf(i+1);
 						flag = true;
 					}
 					else if(flag) {
-						Aces = Aces + " " + String.valueOf(i);
+						Aces = Aces + " " + String.valueOf(i+1);
 					}
 				}
 			}
@@ -1060,21 +1138,21 @@ public class Hand {
 		String Aces = null;
 		boolean flag = false;
 		for(int i = 0; i < 5; i++) {
-			if((this.hand_original.get(i).CardRank() == this.hand.get(i).CardRank() &&
-				this.hand_original.get(i).CardSuit() == this.hand.get(i).CardSuit()) ||
-			(this.hand_original.get(i).CardRank() == this.hand.get(i+1).CardRank() &&
-					this.hand_original.get(i).CardSuit() == this.hand.get(i+1).CardSuit()) ||
-			(this.hand_original.get(i).CardRank() == this.hand.get(i+2).CardRank() &&
-					this.hand_original.get(i).CardSuit() == this.hand.get(i).CardSuit()) ||
-			(this.hand_original.get(i).CardRank() == this.hand.get(i+3).CardRank() &&
-			this.hand_original.get(i).CardSuit() == this.hand.get(i).CardSuit())) {
+			if((this.hand_original.get(i).CardRank() == this.hand.get(this.index).CardRank() &&
+				this.hand_original.get(i).CardSuit() == this.hand.get(this.index).CardSuit()) ||
+			(this.hand_original.get(i).CardRank() == this.hand.get(this.index+1).CardRank() &&
+					this.hand_original.get(i).CardSuit() == this.hand.get(this.index+1).CardSuit()) ||
+			(this.hand_original.get(i).CardRank() == this.hand.get(this.index+2).CardRank() &&
+					this.hand_original.get(i).CardSuit() == this.hand.get(this.index).CardSuit()) ||
+			(this.hand_original.get(i).CardRank() == this.hand.get(this.index+3).CardRank() &&
+			this.hand_original.get(i).CardSuit() == this.hand.get(this.index).CardSuit())) {
 				
 				if(!flag) {
-					Aces = String.valueOf(i);
+					Aces = String.valueOf(i+1);
 					flag = true;
 				}
 				else if(flag) {
-					Aces = Aces + " " + String.valueOf(i);
+					Aces = Aces + " " + String.valueOf(i+1);
 				}
 			}
 		}
@@ -1090,11 +1168,11 @@ public class Hand {
 			this.hand_original.get(i).CardRank() == this.hand.get(4).CardRank()) {
 				
 				if(!flag) {
-					Aces = String.valueOf(i);
+					Aces = String.valueOf(i+1);
 					flag = true;
 				}
 				else if(flag) {
-					Aces = Aces + " " + String.valueOf(i);
+					Aces = Aces + " " + String.valueOf(i+1);
 				}
 			}
 		}
@@ -1108,11 +1186,11 @@ public class Hand {
 			if(this.hand_original.get(i).CardSuit() == this.hand.get(this.index).CardSuit()) {
 				
 				if(!flag) {
-					Aces = String.valueOf(i);
+					Aces = String.valueOf(i+1);
 					flag = true;
 				}
 				else if(flag) {
-					Aces = Aces + " " + String.valueOf(i);
+					Aces = Aces + " " + String.valueOf(i+1);
 				}
 			}
 		}
@@ -1123,17 +1201,21 @@ public class Hand {
 		String Aces = null;
 		boolean flag = false;
 		for(int i = 0; i < 5; i++) {
-			if(this.hand_original.get(i).CardRank() == this.hand.get(this.index).CardRank() ||
-			this.hand_original.get(i).CardRank() == this.hand.get(this.index + 1).CardRank() ||
-			this.hand_original.get(i).CardRank() == this.hand.get(this.index + 2).CardRank() ||
-			this.hand_original.get(i).CardRank() == this.hand.get(this.index + 3).CardRank()) {
+			if((this.hand_original.get(i).CardRank() == this.hand.get(this.index).CardRank() &&
+					this.hand_original.get(i).CardSuit() == this.hand.get(this.index).CardSuit())||
+			(this.hand_original.get(i).CardRank() == this.hand.get(this.index + 1).CardRank() &&
+					this.hand_original.get(i).CardSuit() == this.hand.get(this.index).CardSuit()) ||
+			(this.hand_original.get(i).CardRank() == this.hand.get(this.index + 2).CardRank() &&
+					this.hand_original.get(i).CardSuit() == this.hand.get(this.index + 2).CardSuit())||
+			(this.hand_original.get(i).CardRank() == this.hand.get(this.index + 3).CardRank() &&
+					this.hand_original.get(i).CardSuit() == this.hand.get(this.index + 3).CardSuit())) {
 				
 				if(!flag) {
-					Aces = String.valueOf(i);
+					Aces = String.valueOf(i+1);
 					flag = true;
 				}
 				else if(flag) {
-					Aces = Aces + " " + String.valueOf(i);
+					Aces = Aces + " " + String.valueOf(i+1);
 				}
 			}
 		}
@@ -1147,11 +1229,11 @@ public class Hand {
 			if(this.hand_original.get(i).CardSuit() == this.hand.get(2).CardSuit()) {
 				
 				if(!flag) {
-					Aces = String.valueOf(i);
+					Aces = String.valueOf(i+1);
 					flag = true;
 				}
 				else if(flag) {
-					Aces = Aces + " " + String.valueOf(i);
+					Aces = Aces + " " + String.valueOf(i+1);
 				}
 			}
 		}
@@ -1166,11 +1248,11 @@ public class Hand {
 			this.hand_original.get(i).CardRank() == this.hand.get(this.index + 1).CardRank()) {
 				
 				if(!flag) {
-					Aces = String.valueOf(i);
+					Aces = String.valueOf(i+1);
 					flag = true;
 				}
 				else if(flag) {
-					Aces = Aces + " " + String.valueOf(i);
+					Aces = Aces + " " + String.valueOf(i+1);
 				}
 			}
 		}

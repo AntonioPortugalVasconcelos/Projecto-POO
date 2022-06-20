@@ -1,19 +1,33 @@
 package videopoker.game;
 
+import java.util.ArrayList;
 
 public class Advice {
-	Hand hand;
+	private Hand hand;
+	
 
 	public Advice(Hand hand) {
 		super();
 		this.hand = hand;	
 	}
 	
+	public void getAdv() {
+		getAdvice();
+		this.hand.returnHand();
+	}
+	
 	public void getAdvice() {
-		int i;		
-		System.out.printf("\n%s\n%s\n\n",this.hand.toString(), this.hand.get2Hand());
+		int i;	
+		String DeckList;
+		ArrayList<Card> cards = new ArrayList<Card>();
+		DeckList = this.hand.toString();
+		String[] cardIndicators = DeckList.split(" ");		
+		for(String cardIndicator : cardIndicators) {
+			String[] indicator = cardIndicator.split("");
+            cards.add(new Card(new Rank(indicator[0].charAt(0)), new Suit(indicator[1].charAt(0))));
+		}
 		i = this.hand.handType();
-		System.out.printf("\n%s\n%s\n\n",this.hand.toString(), this.hand.get2Hand());
+		this.hand.handOriginal(cards);
 		if(i == 12 || i == 11) {
 			System.out.printf("player should hold cards 1 2 3 4 5\n");
 			return;
