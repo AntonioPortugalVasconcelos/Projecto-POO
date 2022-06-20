@@ -483,7 +483,7 @@ public class Hand {
 		int i = 0;
 		this.SortHandSuit();
 		for(i = 0; i < 5; i++) {
-			if(this.hand.get(i).CardValue() > 8) {
+			if(this.hand.get(i).CardValue() > 8 && this.hand.get(i).CardSuit() == this.hand.get(2).CardSuit()) {
 				f++;
 			}
 		}
@@ -513,6 +513,16 @@ public class Hand {
 				if(f == 2) {
 					if (this.hand.get(i).CardValue()+ 2 == this.hand.get(i+1).CardValue() &&
 							this.hand.get(i+1).CardValue()+2 == this.hand.get(i+2).CardValue()) {
+								
+							return true;
+					}
+					if (this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
+							this.hand.get(i+1).CardValue()+3 == this.hand.get(i+2).CardValue()) {
+								
+							return true;
+				}
+					if (this.hand.get(i).CardValue()+3 == this.hand.get(i+1).CardValue() &&
+							this.hand.get(i+1).CardValue()+1 == this.hand.get(i+2).CardValue()) {
 								
 							return true;
 					}
@@ -596,8 +606,8 @@ public class Hand {
 	
 	public boolean check4InStrainght2High() {
 		int i = 0;
-		if(this.hand.get(2).CardValue() > 8 &&
-			this.hand.get(3).CardValue() > 8) {
+		if(this.hand.get(3).CardValue() > 8 &&
+			this.hand.get(4).CardValue() > 8) {
 
 			for (i = 1; i < 2; i++) {
 				if(this.hand.get(i).CardValue()+1 == this.hand.get(i+1).CardValue() &&
@@ -1204,7 +1214,7 @@ public class Hand {
 			if((this.hand_original.get(i).CardRank() == this.hand.get(this.index).CardRank() &&
 					this.hand_original.get(i).CardSuit() == this.hand.get(this.index).CardSuit())||
 			(this.hand_original.get(i).CardRank() == this.hand.get(this.index + 1).CardRank() &&
-					this.hand_original.get(i).CardSuit() == this.hand.get(this.index).CardSuit()) ||
+					this.hand_original.get(i).CardSuit() == this.hand.get(this.index + 1).CardSuit()) ||
 			(this.hand_original.get(i).CardRank() == this.hand.get(this.index + 2).CardRank() &&
 					this.hand_original.get(i).CardSuit() == this.hand.get(this.index + 2).CardSuit())||
 			(this.hand_original.get(i).CardRank() == this.hand.get(this.index + 3).CardRank() &&
